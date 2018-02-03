@@ -72,9 +72,9 @@ var offerGuests = {
   max: 12,
 };
 
-// Функция случайного числа из диапозона
+// Функция случайного числа из диапазона
 var getRandomNumRange = function(min, max) {
-  return Math.floor(Math.random() * (min + max)) + min;
+  return Math.floor(Math.random() * (min + max));
 }
 
 // Функция возврата случайного элемента из массива
