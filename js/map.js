@@ -27,7 +27,7 @@ var TITLES = [
 var TYPES = [
   'flat',
   'house',
-  'bungalo',
+  'bungalo'
 ];
 
 var TIMES_CHECK_IN = [
