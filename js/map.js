@@ -73,8 +73,8 @@ var offerGuests = {
 };
 
 // Функция случайного числа из диапазона
-var getRandomNumRange = function (min, max) {
-  return Math.floor(Math.random() * (min + max));
+var getRandomNumRange = function (max, min) {
+  return Math.round(Math.random() * (max - min)) + min;
 }
 
 // Функция возврата случайного элемента из массива
@@ -141,10 +141,32 @@ var makeRandomOffers = function () {
   return offersResult;
 };
 
-// var allOffers =
-makeRandomOffers();
+var allOffers = makeRandomOffers();
 
 var mapFade = document.querySelector('.map');
 mapFade.classList.remove('map--faded');
 
-// var mapTemplate = document.querySelector('template');
+var mapTemplate = document.querySelector('template').content;
+
+// Выбирает пины
+var templatePin = mapTemplate.querySelectorAll('.map__pin');
+
+// Рендерит один пин
+var getPin = function (offer, id) {
+  var pinElement = mapTemplate.querySelector('.map__pin').cloneNode(true);
+  pinElement.style.left = offer.location.x + 24 + 'px';
+  pinElement.style.top = offer.location.y + 24 + 'px';
+  pinElement.dataset.index = id;
+  pinElement.querySelector('img').src = offer.author.avatar;
+  return pinElement;
+};
+
+// Рендерит все пины
+var renderPins = function (offersArray) {
+  var docFragmnet = document.createDocumentFragment();
+  offersArray.forEach(function (offer, index) {
+    docFragmnet.appendChild(getPin(offer, index));
+  });
+  mapFade.appendChild(docFragmnet);
+};
+renderPins(allOffers);
