@@ -101,7 +101,7 @@ var getRandomLengthArr = function (arr) {
 // Функция возращает каждый раз новый перетасованный массив
 var getSortArr = function (arr) {
   for (var i = 0; i < arr.length; i++) {
-  };
+  }
   return arr.slice(getShuffleArray(arr));
 };
 
@@ -136,16 +136,15 @@ var makeRandomOffers = function () {
         'x': randomLocationX,
         'y': randomLocationY,
       }
-    })
-  };
+    });
+  }
   return offersResult;
 };
 
-var allOffers = makeRandomOffers();
-console.log(allOffers);
-
+// var allOffers =
+makeRandomOffers();
 
 var mapFade = document.querySelector('.map');
 mapFade.classList.remove('map--faded');
 
-var mapTemplate = document.querySelector('template');
+// var mapTemplate = document.querySelector('template');
