@@ -73,17 +73,17 @@ var offerGuests = {
 };
 
 // Функция случайного числа из диапазона
-var getRandomNumRange = function(min, max) {
+var getRandomNumRange = function (min, max) {
   return Math.floor(Math.random() * (min + max));
 }
 
 // Функция возврата случайного элемента из массива
-var getRandomElement = function(arr) {
+var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 
 // Функция перестасовки массива Фишера - Йетса
-var getShuffleArray = function(arr) {
+var getShuffleArray = function (arr) {
   for (var i = arr.length - 1; i > 0; i--) {
     var rand = Math.floor(Math.random() * (i + 1));
     var temp = arr[i];
@@ -94,19 +94,18 @@ var getShuffleArray = function(arr) {
 };
 
 // Функция возврата случайного количества строк из массива
-var getRandomLengthArr = function(arr) {
+var getRandomLengthArr = function (arr) {
   return arr.slice(getRandomNumRange(1, arr.length));
 };
 
 // Функция возращает каждый раз новый перетасованный массив
-var getSortArr = function(arr) {
+var getSortArr = function (arr) {
   for (var i = 0; i < arr.length; i++) {
-    arr[i]
-  }
+  };
   return arr.slice(getShuffleArray(arr));
-}
+};
 
-var makeRandomOffers = function() {
+var makeRandomOffers = function () {
   var offersResult = [];
   var shuffledAvatars = getShuffleArray(AVATARS);
   var shuffledTitles = getShuffleArray(TITLES);
@@ -118,27 +117,27 @@ var makeRandomOffers = function() {
 
     offersResult.push({
       'author': {
-        'avatar': 'img/avatars/user' + shuffledAvatars[i], //Перетасованный массив AVATARS
+        'avatar': 'img/avatars/user' + shuffledAvatars[i],
       },
       'offer': {
-        'title': shuffledTitles[i], // Перетасованный массив TITLES
-        'address': randomLocationX + ', ' + randomLocationY, // Строка, адрес предложения, представляет собой запись вида '{{location.x}}, {{location.y}}'
-        'price': getRandomNumRange(offerPrice.min, offerPrice.max), // Случайное число offerPrices 1000 - 1 000 000
-        'type': getRandomElement(TYPES), // Строка с одним из трех фиксированных значений: flat, house или bungalo
-        'rooms': getRandomNumRange(offerRooms.min, offerRooms.max), // Случайное число offerRooms 1-5
-        'guests': getRandomNumRange(offerGuests.min, offerGuests.max), // Случайное число offerGuests 1-12
-        'checkin': getRandomElement(TIMES_CHECK_IN), // Перетасованный массив TIMES_CHECK_IN
-        'checkout': getRandomElement(TIMES_CHECK_OUT), // Перетасованный массив TIMES_CHECK_OUT
-        'features': getRandomLengthArr(FEATURES), // Массив строк случайной длины из FEATURES
+        'title': shuffledTitles[i],
+        'address': randomLocationX + ', ' + randomLocationY,
+        'price': getRandomNumRange(offerPrice.min, offerPrice.max),
+        'type': getRandomElement(TYPES),
+        'rooms': getRandomNumRange(offerRooms.min, offerRooms.max),
+        'guests': getRandomNumRange(offerGuests.min, offerGuests.max),
+        'checkin': getRandomElement(TIMES_CHECK_IN),
+        'checkout': getRandomElement(TIMES_CHECK_OUT),
+        'features': getRandomLengthArr(FEATURES),
         'description': '',
-        'photos': getSortArr(PHOTOS) // Массив из строк PHOTOS расположенных в произвольном порядке
+        'photos': getSortArr(PHOTOS)
       },
       'location': {
-        'x': randomLocationX, // Случайное число координата x метки на карте от 300 до 900
-        'y': randomLocationY, // Случайное число, координата y метки на карте от 150 до 500
+        'x': randomLocationX,
+        'y': randomLocationY,
       }
     })
-  }
+  };
   return offersResult;
 };
 
@@ -150,4 +149,3 @@ var mapFade = document.querySelector('.map');
 mapFade.classList.remove('map--faded');
 
 var mapTemplate = document.querySelector('template');
-console.log(mapTemplate);
