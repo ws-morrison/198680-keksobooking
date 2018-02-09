@@ -114,7 +114,7 @@ var makeRandomOffers = function () {
   var offersResult = [];
   var shuffledAvatars = getShuffleArray(AVATARS);
   var shuffledTitles = getShuffleArray(TITLES);
-  
+
   for (var i = 0; i < OFFER_COUNT; i++) {
 
     var randomLocationX = getRandomNumRange(300, 900);
@@ -186,7 +186,7 @@ var getFeaturesList = function (featuresArray) {
 var getPhotosList = function (photosArray) {
   var photosItem = '';
   for (var i = 0; i < photosArray.length; i++) {
-    photosItem = '<li>' + '<img src =' + photosArray[i] + ' width = 70px, height = 70px ></li>' + photosItem;
+    photosItem = '<li>' + '<img src =' + photosArray[i] + ' width = 60px, height = 60px style = "margin: 5px"></li>' + photosItem;
   }
   return photosItem;
 };
