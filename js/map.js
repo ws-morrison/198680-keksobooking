@@ -114,7 +114,7 @@ var makeRandomOffers = function () {
   var offersResult = [];
   var shuffledAvatars = getShuffleArray(AVATARS);
   var shuffledTitles = getShuffleArray(TITLES);
-
+  
   for (var i = 0; i < OFFER_COUNT; i++) {
 
     var randomLocationX = getRandomNumRange(300, 900);
