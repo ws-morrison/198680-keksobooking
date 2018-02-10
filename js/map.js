@@ -181,7 +181,7 @@ var getFeaturesList = function (featuresArray) {
   }
   return featuresList;
 };
--
+
 // Добавляет фотографии PHOTOS
 var getPhotosList = function (photosArray) {
   var photosItem = '';
