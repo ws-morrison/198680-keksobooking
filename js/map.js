@@ -4,7 +4,6 @@ var OFFER_COUNT = 8;
 
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
-// var SPACE_KEYCODE = 32;
 
 var AVATARS = [
   '01.png',
