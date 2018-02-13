@@ -3,7 +3,7 @@
 var OFFER_COUNT = 8;
 
 var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
+// var ENTER_KEYCODE = 13;
 // var SPACE_KEYCODE = 32;
 
 var AVATARS = [
@@ -113,7 +113,9 @@ var getRandomLengthArr = function (arr) {
 
 // Функция возращает каждый раз новый перетасованный массив Ф-Й
 var getSortArr = function (arr) {
-  for (var i = 0; i < arr.length; i++) {}
+  for (var i = 0; i < arr.length; i++) {
+    //
+  }
   return arr.slice(getShuffleArray(arr));
 };
 
@@ -250,7 +252,7 @@ var closeCurrentOffer = function () {
 
 mainMap.addEventListener('click', function (evt) {
   if (evt.target.classList.contains('popup__close')) {
-    return closeCurrentOffer();
+    closeCurrentOffer();
   }
 });
 document.addEventListener('keydown', function (evt) {
@@ -258,6 +260,8 @@ document.addEventListener('keydown', function (evt) {
     closeCurrentOffer();
   }
 });
+
+document.removeEventListener('keydown', closeCurrentOffer);
 
 
 var hideButtons = document.querySelectorAll('.map__pin');
