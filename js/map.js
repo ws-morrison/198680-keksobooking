@@ -2,6 +2,10 @@
 
 var OFFER_COUNT = 8;
 
+var ESC_KEYCODE = 27;
+// var ENTER_KEYCODE = 13;
+// var SPACE_KEYCODE = 32;
+
 var AVATARS = [
   '01.png',
   '02.png',
@@ -29,6 +33,12 @@ var TYPES = [
   'house',
   'bungalo'
 ];
+
+var ApartmentsTypes = {
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalo: 'Бунгало'
+};
 
 var TIMES_CHECK_IN = [
   '12:00',
@@ -72,10 +82,13 @@ var offerGuests = {
   max: 12,
 };
 
+var mainMap = document.querySelector('.map');
+var mapTemplate = document.querySelector('template').content;
+
 // Функция случайного числа из диапазона
-var getRandomNumRange = function (max, min) {
-  return Math.round(Math.random() * (max - min)) + min;
-}
+var getRandomNumRange = function (min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
 
 // Функция возврата случайного элемента из массива
 var getRandomElement = function (arr) {
@@ -98,9 +111,10 @@ var getRandomLengthArr = function (arr) {
   return arr.slice(getRandomNumRange(1, arr.length));
 };
 
-// Функция возращает каждый раз новый перетасованный массив
+// Функция возращает каждый раз новый перетасованный массив Ф-Й
 var getSortArr = function (arr) {
   for (var i = 0; i < arr.length; i++) {
+    //
   }
   return arr.slice(getShuffleArray(arr));
 };
@@ -143,30 +157,152 @@ var makeRandomOffers = function () {
 
 var allOffers = makeRandomOffers();
 
-var mapFade = document.querySelector('.map');
-mapFade.classList.remove('map--faded');
 
-var mapTemplate = document.querySelector('template').content;
-
-// Выбирает пины
-var templatePin = mapTemplate.querySelectorAll('.map__pin');
-
-// Рендерит один пин
+// Рендер пинов
 var getPin = function (offer, id) {
   var pinElement = mapTemplate.querySelector('.map__pin').cloneNode(true);
-  pinElement.style.left = offer.location.x + 24 + 'px';
-  pinElement.style.top = offer.location.y + 24 + 'px';
+  pinElement.style.left = offer.location.x + 25 + 'px';
+  pinElement.style.top = offer.location.y + 25 + 'px';
   pinElement.dataset.index = id;
   pinElement.querySelector('img').src = offer.author.avatar;
   return pinElement;
 };
 
-// Рендерит все пины
+
+var onPinClick = function (evt) {
+  var pinElement = null;
+  pinElement = evt.target;
+  if (evt.target.tagName === 'IMG') {
+    pinElement = evt.target.parentNode;
+  }
+  renderOffer(allOffers[pinElement.dataset.index]);
+};
+
+
+// Рендерит и показывает карточку по клику на пин
 var renderPins = function (offersArray) {
+
   var docFragmnet = document.createDocumentFragment();
   offersArray.forEach(function (offer, index) {
-    docFragmnet.appendChild(getPin(offer, index));
+    var newPin = getPin(offer, index);
+    newPin.addEventListener('click', onPinClick);
+    docFragmnet.appendChild(newPin);
   });
-  mapFade.appendChild(docFragmnet);
+  mainMap.appendChild(docFragmnet);
+
 };
 renderPins(allOffers);
+
+
+// Добавляет иконки Features
+var getFeaturesList = function (featuresArray) {
+  var featuresList = '';
+  for (var i = 0; i < featuresArray.length; i++) {
+    featuresList = '<li class="feature feature--' + featuresArray[i] + '"></li>' + featuresList;
+  }
+  return featuresList;
+};
+
+
+// Добавляет фотографии PHOTOS
+var getPhotosList = function (photosArray) {
+  var photosItem = '';
+  for (var i = 0; i < photosArray.length; i++) {
+    photosItem = '<li>' + '<img src =' + photosArray[i] + ' width = 60px, height = 60px style = "margin: 5px"></li>' + photosItem;
+  }
+  return photosItem;
+};
+
+
+// Создает и клонирует карточку карточку
+var createCardOffer = function (offerObject) {
+  var cardElement = mapTemplate.querySelector('.map__card').cloneNode(true);
+  cardElement.querySelector('h3').textContent = offerObject.offer.title;
+  cardElement.querySelector('h3+p').textContent = offerObject.offer.address;
+  cardElement.querySelector('.popup__price').textContent = offerObject.offer.price + ' \u20bd/ночь ';
+  cardElement.querySelector('h4').textContent = ApartmentsTypes[offerObject.offer.type];
+  cardElement.querySelector('h4+p').textContent = 'Комнат: ' + offerObject.offer.rooms + ' для ' + offerObject.offer.guests + '  гостей';
+  cardElement.querySelector('p:nth-of-type(4)').textContent = 'Заезд: ' + offerObject.offer.checkin + ', выезд: ' + offerObject.offer.checkout;
+  cardElement.querySelector('.popup__features').innerHTML = getFeaturesList(offerObject.offer.features);
+  cardElement.querySelector('p').textContent = offerObject.offer.description;
+  cardElement.querySelector('.popup__pictures').innerHTML = getPhotosList(offerObject.offer.photos);
+  cardElement.querySelector('.popup__avatar').src = offerObject.author.avatar;
+  return cardElement;
+};
+
+
+var renderOffer = function (offerObject) {
+  var docFragmnet = document.createDocumentFragment();
+  var offerCard = createCardOffer(offerObject);
+  docFragmnet.appendChild(offerCard);
+  var anotherArticle = mainMap.querySelector('.map__card');
+  if (!anotherArticle) {
+    mainMap.appendChild(docFragmnet);
+    return;
+  }
+  mainMap.replaceChild(docFragmnet, anotherArticle);
+};
+
+
+// Закрывает карточку
+var closeCurrentOffer = function () {
+  var closeCard = mainMap.querySelector('.map__card');
+  mainMap.removeChild(closeCard);
+};
+
+mainMap.addEventListener('click', function (evt) {
+  if (evt.target.classList.contains('popup__close')) {
+    closeCurrentOffer();
+  }
+});
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeCurrentOffer();
+  }
+});
+
+document.removeEventListener('keydown', closeCurrentOffer);
+
+
+var hideButtons = document.querySelectorAll('.map__pin');
+var filter = document.querySelector('.map__filters-container');
+var mapMainPin = document.querySelector('.map__pin--main');
+
+
+// Прячет пины. Добавляет всем пинам класс .hidden
+var getFadedPins = function () {
+  for (var i = 0; i < hideButtons.length; i++) {
+    hideButtons[i].classList.add('hidden');
+  }
+  return hideButtons;
+};
+
+
+// Добавляет затемнение для карточки, фильтра, пинов
+var fadeOn = function () {
+  filter.classList.add('notice__form--disabled', 'hidden');
+  getFadedPins();
+  mainMap.classList.add('map--faded');
+  mapMainPin.classList.remove('hidden');
+};
+fadeOn();
+
+
+var removeFadedPins = function () {
+  for (var i = 0; i < hideButtons.length; i++) {
+    hideButtons[i].classList.remove('hidden');
+  }
+  return hideButtons;
+};
+
+
+// Убирает затемнение для карточки, фильтра, пинов
+var fadeOff = function () {
+  filter.classList.remove('notice__form--disabled', 'hidden');
+  removeFadedPins();
+  mainMap.classList.remove('map--faded');
+};
+
+
+// Убирает затемнение по клику
+mapMainPin.addEventListener('mouseup', fadeOff);
