@@ -189,7 +189,6 @@ var renderPins = function (offersArray) {
     docFragmnet.appendChild(newPin);
   });
   mainMap.appendChild(docFragmnet);
-
 };
 renderPins(allOffers);
 
@@ -244,24 +243,24 @@ var renderOffer = function (offerObject) {
 };
 
 
-// Закрывает карточку
-var closeCurrentOffer = function () {
-  var closeCard = mainMap.querySelector('.map__card');
-  mainMap.removeChild(closeCard);
+var removeOfferCard = function () {
+  var closeCard = document.querySelector('.map__card');
+  closeCard.classList.add('hidden');
+};
+var onCloseButtonClick = function (evt) {
+  if (evt.target.classList.contains('popup__close')) {
+    removeOfferCard();
+  }
+};
+var onCloseButtonKeydown = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    removeOfferCard();
+    document.removeEventListener('keydown', removeOfferCard);
+  }
 };
 
-mainMap.addEventListener('click', function (evt) {
-  if (evt.target.classList.contains('popup__close')) {
-    closeCurrentOffer();
-  }
-});
-document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    closeCurrentOffer();
-  }
-});
-
-document.removeEventListener('keydown', closeCurrentOffer);
+document.addEventListener('click', onCloseButtonClick);
+document.addEventListener('keydown', onCloseButtonKeydown);
 
 
 var hideButtons = document.querySelectorAll('.map__pin');
