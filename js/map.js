@@ -243,24 +243,26 @@ var renderOffer = function (offerObject) {
 };
 
 
-var removeOfferCard = function () {
+var closeCurrentOffer = function () {
   var closeCard = document.querySelector('.map__card');
   closeCard.classList.add('hidden');
 };
 var onCloseButtonClick = function (evt) {
   if (evt.target.classList.contains('popup__close')) {
-    removeOfferCard();
+    closeCurrentOffer();
   }
 };
 var onCloseButtonKeydown = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
-    removeOfferCard();
-    document.removeEventListener('keydown', removeOfferCard);
+    closeCurrentOffer();
+    document.removeEventListener('keydown', closeCurrentOffer);
   }
 };
 
 document.addEventListener('click', onCloseButtonClick);
 document.addEventListener('keydown', onCloseButtonKeydown);
+
+document.removeEventListener('keydown', closeCurrentOffer);
 
 
 var hideButtons = document.querySelectorAll('.map__pin');
