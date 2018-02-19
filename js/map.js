@@ -161,8 +161,8 @@ var allOffers = makeRandomOffers();
 // Рендер пинов
 var getPin = function (offer, id) {
   var pinElement = mapTemplate.querySelector('.map__pin').cloneNode(true);
-  pinElement.style.left = offer.location.x + 25 + 'px';
-  pinElement.style.top = offer.location.y + 25 + 'px';
+  pinElement.style.left = offer.location.x + 55 + 'px';
+  pinElement.style.top = offer.location.y + 55 + 'px';
   pinElement.dataset.index = id;
   pinElement.querySelector('img').src = offer.author.avatar;
   return pinElement;
@@ -189,7 +189,6 @@ var renderPins = function (offersArray) {
     docFragmnet.appendChild(newPin);
   });
   mainMap.appendChild(docFragmnet);
-
 };
 renderPins(allOffers);
 
@@ -244,22 +243,24 @@ var renderOffer = function (offerObject) {
 };
 
 
-// Закрывает карточку
 var closeCurrentOffer = function () {
-  var closeCard = mainMap.querySelector('.map__card');
-  mainMap.removeChild(closeCard);
+  var closeCard = document.querySelector('.map__card');
+  closeCard.classList.add('hidden');
 };
-
-mainMap.addEventListener('click', function (evt) {
+var onCloseButtonClick = function (evt) {
   if (evt.target.classList.contains('popup__close')) {
     closeCurrentOffer();
   }
-});
-document.addEventListener('keydown', function (evt) {
+};
+var onCloseButtonKeydown = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     closeCurrentOffer();
+    document.removeEventListener('keydown', closeCurrentOffer);
   }
-});
+};
+
+document.addEventListener('click', onCloseButtonClick);
+document.addEventListener('keydown', onCloseButtonKeydown);
 
 document.removeEventListener('keydown', closeCurrentOffer);
 
