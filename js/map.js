@@ -402,11 +402,11 @@ var getChangePrice = function () {
 
   if (formType.value === 'flat') {
     // formPrice.placeholder = flatPrice;
-
-  } else if (formType.value === 'bungalo' || formPrice.validity.rangeUnderflow) {
+    formPrice.min = flatPrice;
+  } else if (formType.value === 'bungalo') {
     // formPrice.placeholder = bungaloPrice;
     formPrice.min = bungaloPrice;
-    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже' + bungaloPrice);
+    // formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже' + bungaloPrice);
 
   } else if (formType.value === 'house') {
     // formPrice.placeholder = housePrice;
@@ -417,9 +417,16 @@ var getChangePrice = function () {
     formPrice.min = palacePrice;
   }
 };
-getChangePrice();
-formType.addEventListener('change', getChangePrice);
+// getChangePrice();
 
+var getValidTypesPrice = function () {
+  if (formPrice.validity.rangeUnderflow) {
+    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже');
+  }
+};
+
+formType.addEventListener('change', getChangePrice);
+formType.addEventListener('invalid', getValidTypesPrice);
 
 var formTimeIn = noticeForm.querySelector('#timein');
 var formTimeOut = noticeForm.querySelector('#timeout');
