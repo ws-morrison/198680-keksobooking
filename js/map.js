@@ -426,10 +426,7 @@ formType.addEventListener('change', getChangePrice);
 
 var formTimeIn = noticeForm.querySelector('#timein');
 var formTimeOut = noticeForm.querySelector('#timeout');
-var timeInOptionElements = Array.from(formTimeIn);
-var timeOutOptionElements = Array.from(formTimeOut);
-console.log(timeInOptionElements);
-console.log(timeOutOptionElements);
+
 
 // var getSyncTimeIn = function () {
 //
