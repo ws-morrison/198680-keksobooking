@@ -391,5 +391,6 @@ var setOptionDisabled = function (optionsArray, booleanValue) {
   });
 };
 
+
 formRooms.addEventListener('change', setGuestOptions);
 setFormToDefault();
