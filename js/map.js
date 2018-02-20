@@ -343,3 +343,53 @@ var getValidPrice = function () {
   }
 };
 formPrice.addEventListener('invalid', getValidPrice);
+
+
+var NOT_FOR_GUESTS_OPTION = 0;
+var DEFAULT_ROOMS = '1';
+var MAX_ROOMS = 100;
+
+var noticeForm = document.querySelector('.notice__form');
+var formRooms = noticeForm.querySelector('#room_number');
+var formCapacity = noticeForm.querySelector('#capacity');
+var capacityOptionElements = Array.from(formCapacity);
+
+
+var setGuestOptions = function () {
+  var selectedOptionValue = parseInt(formRooms.value, 10);
+
+  setOptionDisabled(capacityOptionElements, true);
+
+  if (selectedOptionValue === MAX_ROOMS) {
+    capacityOptionElements[NOT_FOR_GUESTS_OPTION].disabled = false;
+    capacityOptionElements[NOT_FOR_GUESTS_OPTION].selected = true;
+  } else {
+    var capacityOptions = capacityOptionElements.slice(1);
+    capacityOptions.length = selectedOptionValue;
+    setOptionDisabled(capacityOptions, false);
+    capacityOptions.forEach(function (option) {
+      option.selected = true;
+    });
+  }
+};
+
+var setFormToDefault = function () {
+  formRooms.value = DEFAULT_ROOMS;
+  formCapacity.placeholder = DEFAULT_ROOMS;
+  formCapacity.value = DEFAULT_ROOMS;
+
+  capacityOptionElements.forEach(function (item) {
+    if (!item.selected) {
+      item.disabled = true;
+    }
+  });
+};
+
+var setOptionDisabled = function (optionsArray, booleanValue) {
+  optionsArray.forEach(function (option) {
+    option.disabled = booleanValue;
+  });
+};
+
+formRooms.addEventListener('change', setGuestOptions);
+setFormToDefault();
