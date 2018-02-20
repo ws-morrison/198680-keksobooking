@@ -31,14 +31,10 @@ var TITLES = [
 var TYPES = [
   'flat',
   'house',
-  'bungalo'
+  'bungalo',
+  'palace'
 ];
 
-// var ApartmentsTypes = {
-//   flat: {text: 'Квартира', minPrice: 1000},
-//   house: {text: 'Дом', minPrice: 5000},
-//   bungalo: {text: 'Бунгало', minPrice: 0},
-// };
 
 var ApartmentsTypes = {
   flat: 'Квартира',
@@ -405,22 +401,23 @@ var palacePrice = 10000;
 var getChangePrice = function () {
 
   if (formType.value === 'flat') {
-    formPrice.placeholder = flatPrice;
+    // formPrice.placeholder = flatPrice;
 
-  } else if (formType.value === 'bungalo') {
-    formPrice.placeholder = bungaloPrice;
+  } else if (formType.value === 'bungalo' || formPrice.validity.rangeUnderflow) {
+    // formPrice.placeholder = bungaloPrice;
     formPrice.min = bungaloPrice;
+    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже' + bungaloPrice);
 
   } else if (formType.value === 'house') {
-    formPrice.placeholder = housePrice;
+    // formPrice.placeholder = housePrice;
     formPrice.min = housePrice;
 
   } else if (formType.value === 'palace') {
-    formPrice.placeholder = palacePrice;
+    // formPrice.placeholder = palacePrice;
     formPrice.min = palacePrice;
   }
 };
-
+getChangePrice();
 formType.addEventListener('change', getChangePrice);
 
 
