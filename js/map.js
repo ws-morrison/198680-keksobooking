@@ -34,6 +34,12 @@ var TYPES = [
   'bungalo'
 ];
 
+// var ApartmentsTypes = {
+//   flat: {text: 'Квартира', minPrice: 1000},
+//   house: {text: 'Дом', minPrice: 5000},
+//   bungalo: {text: 'Бунгало', minPrice: 0},
+// };
+
 var ApartmentsTypes = {
   flat: 'Квартира',
   house: 'Дом',
@@ -220,6 +226,7 @@ var createCardOffer = function (offerObject) {
   cardElement.querySelector('h3+p').textContent = offerObject.offer.address;
   cardElement.querySelector('.popup__price').textContent = offerObject.offer.price + ' \u20bd/ночь ';
   cardElement.querySelector('h4').textContent = ApartmentsTypes[offerObject.offer.type];
+  // cardElement.querySelector('h4').textContent = ApartmentsTypes[offerObject.offer.type]['text'];
   cardElement.querySelector('h4+p').textContent = 'Комнат: ' + offerObject.offer.rooms + ' для ' + offerObject.offer.guests + '  гостей';
   cardElement.querySelector('p:nth-of-type(4)').textContent = 'Заезд: ' + offerObject.offer.checkin + ', выезд: ' + offerObject.offer.checkout;
   cardElement.querySelector('.popup__features').innerHTML = getFeaturesList(offerObject.offer.features);
@@ -307,3 +314,32 @@ var fadeOff = function () {
 
 // Убирает затемнение по клику
 mapMainPin.addEventListener('mouseup', fadeOff);
+
+
+// Валидация формы
+var formTitle = document.querySelector('#title');
+var getValidTitle = function () {
+  if (formTitle.validity.tooShort) {
+    formTitle.setCustomValidity('Заголовок слишком короткий. Длина заголовка должна быть от 30 до 100 символов');
+  } else if (formTitle.validity.tooLong) {
+    formTitle.setCustomValidity('Заголовок слишком длинный. Длина заголовка должна быть от 30 до 100 символов');
+  } else if (formTitle.validity.valueMissing) {
+    formTitle.setCustomValidity('Обязательное поле');
+  } else {
+    formTitle.setCustomValidity('');
+  }
+};
+formTitle.addEventListener('invalid', getValidTitle);
+
+
+var formPrice = document.querySelector('#price');
+var getValidPrice = function () {
+  if (formPrice.validity.rangeOverflow) {
+    formPrice.setCustomValidity('Цена не может быть больше 1 000 000');
+  } else if (formPrice.validity.valueMissing) {
+    formPrice.setCustomValidity('Обязательное поле');
+  } else {
+    formPrice.setCustomValidity('');
+  }
+};
+formPrice.addEventListener('invalid', getValidPrice);
