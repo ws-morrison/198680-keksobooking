@@ -43,7 +43,8 @@ var TYPES = [
 var ApartmentsTypes = {
   flat: 'Квартира',
   house: 'Дом',
-  bungalo: 'Бунгало'
+  bungalo: 'Бунгало',
+  palace: 'Дворец'
 };
 
 var TIMES_CHECK_IN = [
@@ -317,7 +318,19 @@ mapMainPin.addEventListener('mouseup', fadeOff);
 
 
 // Валидация формы
-var formTitle = document.querySelector('#title');
+var NOT_FOR_GUESTS_OPTION = 0;
+var DEFAULT_ROOMS = '1';
+var MAX_ROOMS = 100;
+
+var noticeForm = document.querySelector('.notice__form');
+var formRooms = noticeForm.querySelector('#room_number');
+var formCapacity = noticeForm.querySelector('#capacity');
+var formTitle = noticeForm.querySelector('#title');
+var formPrice = noticeForm.querySelector('#price');
+var formType = noticeForm.querySelector('#type');
+var capacityOptionElements = Array.from(formCapacity);
+
+
 var getValidTitle = function () {
   if (formTitle.validity.tooShort) {
     formTitle.setCustomValidity('Заголовок слишком короткий. Длина заголовка должна быть от 30 до 100 символов');
@@ -332,7 +345,6 @@ var getValidTitle = function () {
 formTitle.addEventListener('invalid', getValidTitle);
 
 
-var formPrice = document.querySelector('#price');
 var getValidPrice = function () {
   if (formPrice.validity.rangeOverflow) {
     formPrice.setCustomValidity('Цена не может быть больше 1 000 000');
@@ -345,20 +357,15 @@ var getValidPrice = function () {
 formPrice.addEventListener('invalid', getValidPrice);
 
 
-var NOT_FOR_GUESTS_OPTION = 0;
-var DEFAULT_ROOMS = '1';
-var MAX_ROOMS = 100;
-
-var noticeForm = document.querySelector('.notice__form');
-var formRooms = noticeForm.querySelector('#room_number');
-var formCapacity = noticeForm.querySelector('#capacity');
-var capacityOptionElements = Array.from(formCapacity);
-
-
-var setGuestOptions = function () {
+var getGuestOptions = function () {
   var selectedOptionValue = parseInt(formRooms.value, 10);
 
-  setOptionDisabled(capacityOptionElements, true);
+  var getOptionDisabled = function (optionsArray, booleanValue) {
+    optionsArray.forEach(function (option) {
+      option.disabled = booleanValue;
+    });
+  };
+  getOptionDisabled(capacityOptionElements, true);
 
   if (selectedOptionValue === MAX_ROOMS) {
     capacityOptionElements[NOT_FOR_GUESTS_OPTION].disabled = false;
@@ -366,14 +373,15 @@ var setGuestOptions = function () {
   } else {
     var capacityOptions = capacityOptionElements.slice(1);
     capacityOptions.length = selectedOptionValue;
-    setOptionDisabled(capacityOptions, false);
+    getOptionDisabled(capacityOptions, false);
     capacityOptions.forEach(function (option) {
       option.selected = true;
     });
   }
 };
 
-var setFormToDefault = function () {
+
+var getFormToDefault = function () {
   formRooms.value = DEFAULT_ROOMS;
   formCapacity.placeholder = DEFAULT_ROOMS;
   formCapacity.value = DEFAULT_ROOMS;
@@ -385,12 +393,64 @@ var setFormToDefault = function () {
   });
 };
 
-var setOptionDisabled = function (optionsArray, booleanValue) {
-  optionsArray.forEach(function (option) {
-    option.disabled = booleanValue;
-  });
+
+formRooms.addEventListener('change', getGuestOptions);
+getFormToDefault();
+
+var flatPrice = 0;
+var bungaloPrice = 1000;
+var housePrice = 5000;
+var palacePrice = 10000;
+
+var getChangePrice = function () {
+
+  if (formType.value === 'flat') {
+    formPrice.placeholder = flatPrice;
+
+  } else if (formType.value === 'bungalo') {
+    formPrice.placeholder = bungaloPrice;
+    formPrice.min = bungaloPrice;
+
+  } else if (formType.value === 'house') {
+    formPrice.placeholder = housePrice;
+    formPrice.min = housePrice;
+
+  } else if (formType.value === 'palace') {
+    formPrice.placeholder = palacePrice;
+    formPrice.min = palacePrice;
+  }
 };
 
+formType.addEventListener('change', getChangePrice);
 
-formRooms.addEventListener('change', setGuestOptions);
-setFormToDefault();
+
+var formTimeIn = noticeForm.querySelector('#timein');
+var formTimeOut = noticeForm.querySelector('#timeout');
+var timeInOptionElements = Array.from(formTimeIn);
+var timeOutOptionElements = Array.from(formTimeOut);
+console.log(timeInOptionElements);
+console.log(timeOutOptionElements);
+
+// var getSyncTimeIn = function () {
+//
+//   if (formTimeIn.value === '12:00') {
+//     formTimeOut.value = '12:00';
+//
+//   } else if (formTimeIn.value === '13:00') {
+//     formTimeOut.value = '13:00';
+//
+//   } else if (formTimeIn.value === '14:00') {
+//     formTimeOut.value = '14:00';
+//
+//   }
+// };
+
+var getSyncTimeIn = function (evt) {
+  if (evt.target === formTimeIn) {
+    formTimeOut.value = formTimeIn.value;
+  } else if (evt.target === formTimeOut) {
+    formTimeIn.value = formTimeOut.value;
+  }
+};
+
+formTimeIn.addEventListener('change', getSyncTimeIn);
