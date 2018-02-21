@@ -325,6 +325,7 @@ var formTitle = noticeForm.querySelector('#title');
 var formPrice = noticeForm.querySelector('#price');
 var formType = noticeForm.querySelector('#type');
 var capacityOptionElements = Array.from(formCapacity);
+var typeOptionElements = Array.from(formType);
 
 
 var getValidTitle = function () {
@@ -403,30 +404,49 @@ var getChangePrice = function () {
   if (formType.value === 'flat') {
     // formPrice.placeholder = flatPrice;
     formPrice.min = flatPrice;
+    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + flatPrice);
   } else if (formType.value === 'bungalo') {
     // formPrice.placeholder = bungaloPrice;
     formPrice.min = bungaloPrice;
-    // formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже' + bungaloPrice);
+    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + bungaloPrice);
 
   } else if (formType.value === 'house') {
     // formPrice.placeholder = housePrice;
     formPrice.min = housePrice;
-
+    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + housePrice);
   } else if (formType.value === 'palace') {
     // formPrice.placeholder = palacePrice;
     formPrice.min = palacePrice;
+    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + palacePrice);
   }
 };
 // getChangePrice();
 
-var getValidTypesPrice = function () {
-  if (formPrice.validity.rangeUnderflow) {
-    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже');
-  }
-};
+// var getValidTypesPrice = function () {
+//   if (formPrice.validity.rangeUnderflow < bungaloPrice) {
+//     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + bungaloPrice);
+//   }
+// };
+
+// var getValidTypesPrice = function () {
+//   if (formPrice.validity.rangeUnderflow === flatPrice) {
+//     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + flatPrice);
+//
+//   } else if (formPrice.validity.rangeUnderflow === bungaloPrice) {
+//     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + bungaloPrice);
+//
+//   } else if (formPrice.validity.rangeUnderflow === housePrice) {
+//     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + housePrice);
+//
+//   } else if (formPrice.validity.rangeUnderflow === palacePrice) {
+//     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + palacePrice);
+//
+//   }   У этой функции не работает setCustomValidity
+// };
 
 formType.addEventListener('change', getChangePrice);
-formType.addEventListener('invalid', getValidTypesPrice);
+formPrice.addEventListener('invalid', getChangePrice);
+// formPrice.addEventListener('invalid', getValidTypesPrice);
 
 var formTimeIn = noticeForm.querySelector('#timein');
 var formTimeOut = noticeForm.querySelector('#timeout');
