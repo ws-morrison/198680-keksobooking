@@ -325,7 +325,7 @@ var formTitle = noticeForm.querySelector('#title');
 var formPrice = noticeForm.querySelector('#price');
 var formType = noticeForm.querySelector('#type');
 var capacityOptionElements = Array.from(formCapacity);
-var typeOptionElements = Array.from(formType);
+// var typeOptionElements = Array.from(formType);
 
 
 var getValidTitle = function () {
