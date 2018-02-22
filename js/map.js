@@ -155,7 +155,6 @@ var makeRandomOffers = function () {
   }
   return offersResult;
 };
-
 var allOffers = makeRandomOffers();
 
 
