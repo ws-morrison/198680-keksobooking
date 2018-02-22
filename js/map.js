@@ -3,8 +3,6 @@
 var OFFER_COUNT = 8;
 
 var ESC_KEYCODE = 27;
-// var ENTER_KEYCODE = 13;
-// var SPACE_KEYCODE = 32;
 
 var AVATARS = [
   '01.png',
@@ -265,12 +263,10 @@ var onCloseButtonKeydown = function (evt) {
 
 document.addEventListener('click', onCloseButtonClick);
 document.addEventListener('keydown', onCloseButtonKeydown);
-
 document.removeEventListener('keydown', closeCurrentOffer);
 
 
 var hideButtons = document.querySelectorAll('.map__pin');
-var filter = document.querySelector('.map__filters-container');
 var mapMainPin = document.querySelector('.map__pin--main');
 
 
@@ -283,9 +279,11 @@ var getFadedPins = function () {
 };
 
 
+var noticeForm = document.querySelector('.notice__form');
+
 // Добавляет затемнение для карточки, фильтра, пинов
 var fadeOn = function () {
-  filter.classList.add('notice__form--disabled', 'hidden');
+  noticeForm.classList.add('notice__form--disabled');
   getFadedPins();
   mainMap.classList.add('map--faded');
   mapMainPin.classList.remove('hidden');
@@ -303,13 +301,30 @@ var removeFadedPins = function () {
 
 // Убирает затемнение для карточки, фильтра, пинов
 var fadeOff = function () {
-  filter.classList.remove('notice__form--disabled', 'hidden');
   removeFadedPins();
   mainMap.classList.remove('map--faded');
+  noticeForm.classList.remove('notice__form--disabled');
+  getDisabledInputOff();
 };
 
 
-// Убирает затемнение по клику
+// Задает или убирает аттрибут disabled форме
+var formFieldset = noticeForm.querySelectorAll('fieldset');
+var getDisabledInputOn = function () {
+  for (var i = 0; i < formFieldset.length; i++) {
+    formFieldset[i].setAttribute('disabled', true);
+  }
+};
+document.addEventListener('DOMContentLoaded', getDisabledInputOn);
+
+var getDisabledInputOff = function () {
+  for (var i = 0; i < formFieldset.length; i++) {
+    formFieldset[i].removeAttribute('disabled', false);
+  }
+};
+
+
+// Убирает затемнение
 mapMainPin.addEventListener('mouseup', fadeOff);
 
 
@@ -318,14 +333,13 @@ var NOT_FOR_GUESTS_OPTION = 0;
 var DEFAULT_ROOMS = '1';
 var MAX_ROOMS = 100;
 
-var noticeForm = document.querySelector('.notice__form');
+
 var formRooms = noticeForm.querySelector('#room_number');
 var formCapacity = noticeForm.querySelector('#capacity');
 var formTitle = noticeForm.querySelector('#title');
 var formPrice = noticeForm.querySelector('#price');
 var formType = noticeForm.querySelector('#type');
 var capacityOptionElements = Array.from(formCapacity);
-// var typeOptionElements = Array.from(formType);
 
 
 var getValidTitle = function () {
@@ -402,69 +416,32 @@ var palacePrice = 10000;
 var getChangePrice = function () {
 
   if (formType.value === 'flat') {
-    // formPrice.placeholder = flatPrice;
+
     formPrice.min = flatPrice;
-    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + flatPrice);
+    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + flatPrice + ' \u20bd');
   } else if (formType.value === 'bungalo') {
-    // formPrice.placeholder = bungaloPrice;
+
     formPrice.min = bungaloPrice;
-    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + bungaloPrice);
+    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + bungaloPrice + ' \u20bd');
 
   } else if (formType.value === 'house') {
-    // formPrice.placeholder = housePrice;
+
     formPrice.min = housePrice;
-    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + housePrice);
+    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + housePrice + ' \u20bd');
   } else if (formType.value === 'palace') {
-    // formPrice.placeholder = palacePrice;
+
     formPrice.min = palacePrice;
-    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + palacePrice);
+    formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + palacePrice + ' \u20bd');
   }
 };
-// getChangePrice();
-
-// var getValidTypesPrice = function () {
-//   if (formPrice.validity.rangeUnderflow < bungaloPrice) {
-//     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + bungaloPrice);
-//   }
-// };
-
-// var getValidTypesPrice = function () {
-//   if (formPrice.validity.rangeUnderflow === flatPrice) {
-//     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + flatPrice);
-//
-//   } else if (formPrice.validity.rangeUnderflow === bungaloPrice) {
-//     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + bungaloPrice);
-//
-//   } else if (formPrice.validity.rangeUnderflow === housePrice) {
-//     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + housePrice);
-//
-//   } else if (formPrice.validity.rangeUnderflow === palacePrice) {
-//     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + palacePrice);
-//
-//   }   У этой функции не работает setCustomValidity
-// };
 
 formType.addEventListener('change', getChangePrice);
 formPrice.addEventListener('invalid', getChangePrice);
-// formPrice.addEventListener('invalid', getValidTypesPrice);
+
 
 var formTimeIn = noticeForm.querySelector('#timein');
 var formTimeOut = noticeForm.querySelector('#timeout');
 
-
-// var getSyncTimeIn = function () {
-//
-//   if (formTimeIn.value === '12:00') {
-//     formTimeOut.value = '12:00';
-//
-//   } else if (formTimeIn.value === '13:00') {
-//     formTimeOut.value = '13:00';
-//
-//   } else if (formTimeIn.value === '14:00') {
-//     formTimeOut.value = '14:00';
-//
-//   }
-// };
 
 var getSyncTimeIn = function (evt) {
   if (evt.target === formTimeIn) {
@@ -473,5 +450,11 @@ var getSyncTimeIn = function (evt) {
     formTimeIn.value = formTimeOut.value;
   }
 };
-
 formTimeIn.addEventListener('change', getSyncTimeIn);
+
+var formReset = noticeForm.querySelector('.form__reset');
+var getFormReset = function () {
+  fadeOn();
+  getDisabledInputOn();
+};
+formReset.addEventListener('click', getFormReset);
