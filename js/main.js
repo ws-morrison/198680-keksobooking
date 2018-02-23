@@ -1,4 +1,6 @@
 'use strict';
+// ////////// Файл data.js .Константы, переменные, ут функции и сгенерированый объект
+
 
 var OFFER_COUNT = 8;
 
@@ -153,8 +155,13 @@ var makeRandomOffers = function () {
   }
   return offersResult;
 };
-var allOffers = makeRandomOffers();
+// var allOffers = makeRandomOffers();
+var genObj = {
+  offersArr: makeRandomOffers()
+};
+// ....... Конец data.js
 
+// ////////// Файл map.js /Рендер пинов, карточек, их отражение на карте и события
 
 // Рендер пинов
 var getPin = function (offer, id) {
@@ -173,7 +180,7 @@ var onPinClick = function (evt) {
   if (evt.target.tagName === 'IMG') {
     pinElement = evt.target.parentNode;
   }
-  renderOffer(allOffers[pinElement.dataset.index]);
+  renderOffer(genObj.offersArr[pinElement.dataset.index]); // genObj.offersArr из файла data
 };
 
 
@@ -190,7 +197,7 @@ var renderPins = function (offersArray) {
   });
   mainMap.appendChild(docFragmnet);
 };
-renderPins(allOffers);
+renderPins(genObj.offersArr); // genObj.offersArr из файла data
 
 
 // Добавляет иконки Features
