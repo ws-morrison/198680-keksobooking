@@ -21,5 +21,5 @@
     renderOffer(window.data.makeRandomOffers[pinElement.dataset.index]);
   };
 
-  window.pins = pins;
+  // window.pins = pins;
 })();

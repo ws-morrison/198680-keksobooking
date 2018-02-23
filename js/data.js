@@ -85,6 +85,8 @@
     max: 12,
   };
 
+  var noticeForm = document.querySelector('.notice__form');
+
   window.data = {
     makeRandomOffers: function () {
       var offersResult = [];

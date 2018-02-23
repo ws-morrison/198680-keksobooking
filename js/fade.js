@@ -15,13 +15,16 @@
   };
 
 
-  var noticeForm = document.querySelector('.notice__form');
+  // var data.noticeForm = document.querySelector('.notice__form');
 
   // Добавляет затемнение для карточки, фильтра, пинов
+  var fadedMainMap = document.querySelector('.map--faded');
+  var fadedNoticeForm = document.querySelector('.notice__form');
+
   var fadeOn = function () {
-    noticeForm.classList.add('notice__form--disabled');
+    fadedNoticeForm.classList.add('notice__form--disabled');
     getFadedPins();
-    mainMap.classList.add('map--faded');
+    fadedMainMap.classList.add('map--faded');
     mapMainPin.classList.remove('hidden');
   };
   fadeOn();
@@ -38,14 +41,14 @@
   // Убирает затемнение для карточки, фильтра, пинов
   var fadeOff = function () {
     removeFadedPins();
-    mainMap.classList.remove('map--faded');
-    noticeForm.classList.remove('notice__form--disabled');
+    fadedMainMap.classList.remove('map--faded');
+    fadedNoticeForm.classList.remove('notice__form--disabled');
     getDisabledInputOff();
   };
 
 
   // Задает или убирает аттрибут disabled форме
-  var formFieldset = noticeForm.querySelectorAll('fieldset');
+  var formFieldset = fadedNoticeForm.querySelectorAll('fieldset');
   var getDisabledInputOn = function () {
     for (var i = 0; i < formFieldset.length; i++) {
       formFieldset[i].setAttribute('disabled', true);
@@ -64,7 +67,7 @@
   mapMainPin.addEventListener('mouseup', fadeOff);
 
   // Сброс активного состояния
-  var formReset = noticeForm.querySelector('.form__reset');
+  var formReset = fadedNoticeForm.querySelector('.form__reset');
   var getFormReset = function () {
     closeCurrentOffer();
     fadeOn();
@@ -72,5 +75,5 @@
   };
   formReset.addEventListener('click', getFormReset);
 
-  window.fade = fade;
+  // window.fade = fade;
 })();

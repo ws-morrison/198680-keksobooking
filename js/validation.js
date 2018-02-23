@@ -5,12 +5,12 @@
   var DEFAULT_ROOMS = '1';
   var MAX_ROOMS = 100;
 
-
-  var formRooms = noticeForm.querySelector('#room_number');
-  var formCapacity = noticeForm.querySelector('#capacity');
-  var formTitle = noticeForm.querySelector('#title');
-  var formPrice = noticeForm.querySelector('#price');
-  var formType = noticeForm.querySelector('#type');
+// document временно
+  var formRooms = document.querySelector('#room_number');
+  var formCapacity = document.querySelector('#capacity');
+  var formTitle = document.querySelector('#title');
+  var formPrice = document.querySelector('#price');
+  var formType = document.querySelector('#type');
   var capacityOptionElements = Array.from(formCapacity);
 
 
@@ -111,8 +111,8 @@
   formPrice.addEventListener('invalid', getChangePrice);
 
 
-  var formTimeIn = noticeForm.querySelector('#timein');
-  var formTimeOut = noticeForm.querySelector('#timeout');
+  var formTimeIn = document.querySelector('#timein');
+  var formTimeOut = document.querySelector('#timeout');
 
 
   var getSyncTimeIn = function (evt) {
@@ -124,5 +124,5 @@
   };
   formTimeIn.addEventListener('change', getSyncTimeIn);
 
-  window.validation = validation;
+  // window.validation = validation;
 })();

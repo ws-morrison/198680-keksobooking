@@ -5,16 +5,25 @@
   var mapTemplate = document.querySelector('template').content;
   var renderPins = function (offersArray) {
 
-    var docFragmnet = document.createDocumentFragment();
-    offersArray.forEach(function (offer, index) {
-      var newPin = getPin(offer, index);
-      newPin.addEventListener('click', onPinClick);
-      docFragmnet.appendChild(newPin);
-    });
-    mainMap.appendChild(docFragmnet);
-  };
-  renderPins(window.data.makeRandomOffers);
+  //   var docFragmnet = document.createDocumentFragment();
+  //   offersArray.forEach(function (offer, index) {
+  //     var newPin = getPin(offer, index);
+  //     newPin.addEventListener('click', onPinClick);
+  //     docFragmnet.appendChild(newPin);
+  //   });
+  //   mainMap.appendChild(docFragmnet);
+  // };
+  // renderPins(window.data.makeRandomOffers);
 
+  var docFragmnet = document.createDocumentFragment();
+  for (var i = 0; i < offersArray.length; i++) {
+    var newPin = getPin(offer, index);
+    newPin.addEventListener('click', onPinClick);
+    docFragmnet.appendChild(newPin);
+  }
+  mainMap.appendChild(docFragmnet);
+};
+renderPins(window.data.makeRandomOffers);
 
   // Добавляет иконки Features
   var getFeaturesList = function (featuresArray) {
@@ -85,5 +94,5 @@
   document.addEventListener('keydown', onCloseButtonKeydown);
   document.removeEventListener('keydown', closeCurrentOffer);
 
-  window.cards = cards;
+  // window.cards = cards;
 })();
