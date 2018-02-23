@@ -4,7 +4,7 @@
 
 var OFFER_COUNT = 8;
 
-var ESC_KEYCODE = 27;
+// var ESC_KEYCODE = 27;
 
 var AVATARS = [
   '01.png',
@@ -119,7 +119,6 @@ var getSortArr = function (arr) {
   }
   return arr.slice(getShuffleArray(arr));
 };
-
 var makeRandomOffers = function () {
   var offersResult = [];
   var shuffledAvatars = getShuffleArray(AVATARS);
@@ -155,13 +154,14 @@ var makeRandomOffers = function () {
   }
   return offersResult;
 };
-// var allOffers = makeRandomOffers();
-var genObj = {
-  offersArr: makeRandomOffers()
-};
+var allOffers = makeRandomOffers();
+
+
 // ....... Конец data.js
 
 // ////////// Файл map.js /Рендер пинов, карточек, их отражение на карте и события
+
+var ESC_KEYCODE = 27;
 
 // Рендер пинов
 var getPin = function (offer, id) {
@@ -180,7 +180,7 @@ var onPinClick = function (evt) {
   if (evt.target.tagName === 'IMG') {
     pinElement = evt.target.parentNode;
   }
-  renderOffer(genObj.offersArr[pinElement.dataset.index]); // genObj.offersArr из файла data
+  renderOffer(allOffers[pinElement.dataset.index]); // window.data.offersArr из файла data
 };
 
 
@@ -190,14 +190,25 @@ var mapTemplate = document.querySelector('template').content;
 var renderPins = function (offersArray) {
 
   var docFragmnet = document.createDocumentFragment();
-  offersArray.forEach(function (offer, index) {
+
+  for (var i = 0; i < offersArray.length; i++) {
     var newPin = getPin(offer, index);
     newPin.addEventListener('click', onPinClick);
     docFragmnet.appendChild(newPin);
-  });
+  }
   mainMap.appendChild(docFragmnet);
 };
-renderPins(genObj.offersArr); // genObj.offersArr из файла data
+renderPins(allOffers);
+
+//   var docFragmnet = document.createDocumentFragment();
+//   offersArray.forEach(function (offer, index) {
+//     var newPin = getPin(offer, index);
+//     newPin.addEventListener('click', onPinClick);
+//     docFragmnet.appendChild(newPin);
+//   });
+//   mainMap.appendChild(docFragmnet);
+// };
+// renderPins(window.data.offersArr); // window.data.offersArr из файла data
 
 
 // Добавляет иконки Features
