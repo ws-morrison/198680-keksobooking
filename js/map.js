@@ -82,8 +82,8 @@
 //   min: 1,
 //   max: 12,
 // };
-
-
+//
+//
 // // Функция случайного числа из диапазона
 // var getRandomNumRange = function (min, max) {
 //   return Math.floor(Math.random() * (max - min)) + min;
@@ -117,7 +117,7 @@
 //   }
 //   return arr.slice(getShuffleArray(arr));
 // };
-
+//
 // var makeRandomOffers = function () {
 //   var offersResult = [];
 //   var shuffledAvatars = getShuffleArray(AVATARS);
@@ -154,8 +154,8 @@
 //   return offersResult;
 // };
 // var allOffers = makeRandomOffers();
-
-
+//
+//
 // // Рендер пинов
 // var getPin = function (offer, id) {
 //   var pinElement = mapTemplate.querySelector('.map__pin').cloneNode(true);
@@ -175,8 +175,8 @@
 //   }
 //   renderOffer(allOffers[pinElement.dataset.index]);
 // };
-
-
+//
+//
 // // Рендерит и показывает карточку по клику на пин
 // var mainMap = document.querySelector('.map');
 // var mapTemplate = document.querySelector('template').content;
@@ -241,8 +241,8 @@
 //   }
 //   mainMap.replaceChild(docFragmnet, anotherArticle);
 // };
-
-
+//
+//
 // var closeCurrentOffer = function () {
 //   var closeCard = document.querySelector('.map__card');
 //   closeCard.classList.add('hidden');
@@ -262,8 +262,8 @@
 // document.addEventListener('click', onCloseButtonClick);
 // document.addEventListener('keydown', onCloseButtonKeydown);
 // document.removeEventListener('keydown', closeCurrentOffer);
-
-
+//
+//
 // // Прячет пины. Добавляет всем пинам класс .hidden
 // // Модуль активного и неактивного состояний
 // var hideButtons = document.querySelectorAll('.map__pin');
@@ -334,7 +334,7 @@
 // formReset.addEventListener('click', getFormReset);
 //
 // // Конец модуля
-
+//
 // // Валидация формы
 // var NOT_FOR_GUESTS_OPTION = 0;
 // var DEFAULT_ROOMS = '1';
