@@ -189,26 +189,16 @@ var mainMap = document.querySelector('.map');
 var mapTemplate = document.querySelector('template').content;
 var renderPins = function (offersArray) {
 
-  var docFragmnet = document.createDocumentFragment();
 
-  for (var i = 0; i < offersArray.length; i++) {
+  var docFragmnet = document.createDocumentFragment();
+  offersArray.forEach(function (offer, index) {
     var newPin = getPin(offer, index);
     newPin.addEventListener('click', onPinClick);
     docFragmnet.appendChild(newPin);
-  }
+  });
   mainMap.appendChild(docFragmnet);
 };
-renderPins(allOffers);
-
-//   var docFragmnet = document.createDocumentFragment();
-//   offersArray.forEach(function (offer, index) {
-//     var newPin = getPin(offer, index);
-//     newPin.addEventListener('click', onPinClick);
-//     docFragmnet.appendChild(newPin);
-//   });
-//   mainMap.appendChild(docFragmnet);
-// };
-// renderPins(window.data.offersArr); // window.data.offersArr из файла data
+renderPins(allOffers); // window.data.offersArr из файла data
 
 
 // Добавляет иконки Features
