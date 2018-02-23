@@ -90,11 +90,11 @@
   window.data = {
     makeRandomOffers: function () {
       var offersResult = [];
-      var shuffledAvatars = util.getShuffleArray(AVATARS);
-      var shuffledTitles = util.getShuffleArray(TITLES);
+      var shuffledAvatars = window.util.getShuffleArray(AVATARS);
+      var shuffledTitles = window.util.getShuffleArray(TITLES);
       for (var i = 0; i < OFFER_COUNT; i++) {
-        var randomLocationX = util.getRandomNumRange(300, 900);
-        var randomLocationY = util.getRandomNumRange(100, 500);
+        var randomLocationX = window.util.getRandomNumRange(300, 900);
+        var randomLocationY = window.util.getRandomNumRange(100, 500);
         offersResult.push({
           'author': {
             'avatar': 'img/avatars/user' + shuffledAvatars[i],
@@ -102,15 +102,15 @@
           'offer': {
             'title': shuffledTitles[i],
             'address': randomLocationX + ', ' + randomLocationY,
-            'price': util.getRandomNumRange(offerPrice.min, offerPrice.max),
-            'type': util.getRandomElement(TYPES),
-            'rooms': util.getRandomNumRange(offerRooms.min, offerRooms.max),
-            'guests': util.getRandomNumRange(offerGuests.min, offerGuests.max),
-            'checkin': util.getRandomElement(TIMES_CHECK_IN),
-            'checkout': util.getRandomElement(TIMES_CHECK_OUT),
-            'features': util.getRandomLengthArr(FEATURES),
+            'price': window.util.getRandomNumRange(offerPrice.min, offerPrice.max),
+            'type': window.util.getRandomElement(TYPES),
+            'rooms': window.util.getRandomNumRange(offerRooms.min, offerRooms.max),
+            'guests': window.util.getRandomNumRange(offerGuests.min, offerGuests.max),
+            'checkin': window.util.getRandomElement(TIMES_CHECK_IN),
+            'checkout': window.util.getRandomElement(TIMES_CHECK_OUT),
+            'features': window.util.getRandomLengthArr(FEATURES),
             'description': '',
-            'photos': util.getSortArr(PHOTOS)
+            'photos': window.util.getSortArr(PHOTOS)
           },
           'location': {
             'x': randomLocationX,

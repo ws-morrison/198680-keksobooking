@@ -5,25 +5,26 @@
   var mapTemplate = document.querySelector('template').content;
   var renderPins = function (offersArray) {
 
-  //   var docFragmnet = document.createDocumentFragment();
-  //   offersArray.forEach(function (offer, index) {
-  //     var newPin = getPin(offer, index);
-  //     newPin.addEventListener('click', onPinClick);
-  //     docFragmnet.appendChild(newPin);
-  //   });
-  //   mainMap.appendChild(docFragmnet);
-  // };
-  // renderPins(window.data.makeRandomOffers);
+    //   var docFragmnet = document.createDocumentFragment();
+    //   offersArray.forEach(function (offer, index) {
+    //     var newPin = getPin(offer, index);
+    //     newPin.addEventListener('click', onPinClick);
+    //     docFragmnet.appendChild(newPin);
+    //   });
+    //   mainMap.appendChild(docFragmnet);
+    // };
+    // renderPins(window.data.makeRandomOffers);
 
-  var docFragmnet = document.createDocumentFragment();
-  for (var i = 0; i < offersArray.length; i++) {
-    var newPin = getPin(offer, index);
-    newPin.addEventListener('click', onPinClick);
-    docFragmnet.appendChild(newPin);
-  }
-  mainMap.appendChild(docFragmnet);
-};
-renderPins(window.data.makeRandomOffers);
+    var docFragmnet = document.createDocumentFragment();
+    debugger;
+    for (var i = 0; i < offersArray.length; i++) {
+      var newPin = getPin(offer, index);
+      newPin.addEventListener('click', window.data.onPinClick);
+      docFragmnet.appendChild(newPin);
+    }
+    mainMap.appendChild(docFragmnet);
+  };
+  renderPins(window.data.makeRandomOffers);
 
   // Добавляет иконки Features
   var getFeaturesList = function (featuresArray) {
@@ -61,18 +62,30 @@ renderPins(window.data.makeRandomOffers);
     return cardElement;
   };
 
-
-  var renderOffer = function (offerObject) {
-    var docFragmnet = document.createDocumentFragment();
-    var offerCard = createCardOffer(offerObject);
-    docFragmnet.appendChild(offerCard);
-    var anotherArticle = mainMap.querySelector('.map__card');
-    if (!anotherArticle) {
-      mainMap.appendChild(docFragmnet);
-      return;
+  window.cards = {
+    renderOffer: function (offerObject) {
+      var docFragmnet = document.createDocumentFragment();
+      var offerCard = createCardOffer(offerObject);
+      docFragmnet.appendChild(offerCard);
+      var anotherArticle = mainMap.querySelector('.map__card');
+      if (!anotherArticle) {
+        mainMap.appendChild(docFragmnet);
+        return;
+      }
+      mainMap.replaceChild(docFragmnet, anotherArticle);
     }
-    mainMap.replaceChild(docFragmnet, anotherArticle);
   };
+  // var renderOffer = function (offerObject) {
+  //   var docFragmnet = document.createDocumentFragment();
+  //   var offerCard = createCardOffer(offerObject);
+  //   docFragmnet.appendChild(offerCard);
+  //   var anotherArticle = mainMap.querySelector('.map__card');
+  //   if (!anotherArticle) {
+  //     mainMap.appendChild(docFragmnet);
+  //     return;
+  //   }
+  //   mainMap.replaceChild(docFragmnet, anotherArticle);
+  // };
 
   var closeCurrentOffer = function () {
     var closeCard = document.querySelector('.map__card');
