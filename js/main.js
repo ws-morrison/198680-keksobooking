@@ -1,11 +1,11 @@
 'use strict';
 
-// ////////// Файл data.js Константы, переменные, ут функции и сгенерированый объект
+// ////////// Файл data.js Константы, переменные, утилиты
 
 
 var OFFER_COUNT = 8;
 
-var ESC_KEYCODE = 27;
+// var ESC_KEYCODE = 27;
 
 var AVATARS = [
   '01.png',
@@ -124,7 +124,9 @@ var getSortArr = function (arr) {
 // ....... Конец data.js
 
 
-// ////////// Файл map.js /Рендер пинов, карточек, их отражение на карте и события
+// ////////// Файл map.js Рендер пинов, карточек, их отражение на карте и события
+
+var ESC_KEYCODE = 27;
 
 var makeRandomOffers = function () {
   var offersResult = [];
@@ -162,9 +164,6 @@ var makeRandomOffers = function () {
   return offersResult;
 };
 var allOffers = makeRandomOffers();
-// var genObj = {
-//   offersArr: makeRandomOffers()
-// };
 
 
 // Рендер пинов
@@ -184,7 +183,7 @@ var onPinClick = function (evt) {
   if (evt.target.tagName === 'IMG') {
     pinElement = evt.target.parentNode;
   }
-  renderOffer(allOffers[pinElement.dataset.index]); // allOffers из файла data
+  renderOffer(allOffers[pinElement.dataset.index]);
 };
 
 
@@ -201,7 +200,7 @@ var renderPins = function (offersArray) {
   });
   mainMap.appendChild(docFragmnet);
 };
-renderPins(allOffers); // allOffers из файла data
+renderPins(allOffers);
 
 
 // Добавляет иконки Features
