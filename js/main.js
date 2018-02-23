@@ -1,5 +1,5 @@
 'use strict';
-// ////////// Файл data.js .Константы, переменные, ут функции и сгенерированый объект
+// ////////// Файл data.js Константы, переменные, ут функции и сгенерированый объект
 
 
 var OFFER_COUNT = 8;
@@ -270,12 +270,23 @@ document.addEventListener('click', onCloseButtonClick);
 document.addEventListener('keydown', onCloseButtonKeydown);
 document.removeEventListener('keydown', closeCurrentOffer);
 
+// Убирает map--faded поставленный по умолчанию
+var removeDefaultFade = function () {
+  var fadeMap = document.querySelector('.map');
+  fadeMap.classList.remove('map--faded');
+};
+removeDefaultFade();
+
+// ........ Конец файла map.js
+
+
+// ////////// Файл fade.js
 
 // Прячет пины. Добавляет всем пинам класс .hidden
 // Модуль активного и неактивного состояний
 var hideButtons = document.querySelectorAll('.map__pin');
 var mapMainPin = document.querySelector('.map__pin--main');
-
+var noticeForm = document.querySelector('.notice__form');
 var getFadedPins = function () {
   for (var i = 0; i < hideButtons.length; i++) {
     hideButtons[i].classList.add('hidden');
@@ -283,8 +294,6 @@ var getFadedPins = function () {
   return hideButtons;
 };
 
-
-var noticeForm = document.querySelector('.notice__form');
 
 // Добавляет затемнение для карточки, фильтра, пинов
 var fadeOn = function () {
@@ -340,19 +349,19 @@ var getFormReset = function () {
 };
 formReset.addEventListener('click', getFormReset);
 
-// Конец модуля
 
+// ///////// Файл form.js
 // Валидация формы
 var NOT_FOR_GUESTS_OPTION = 0;
 var DEFAULT_ROOMS = '1';
 var MAX_ROOMS = 100;
 
-
-var formRooms = noticeForm.querySelector('#room_number');
-var formCapacity = noticeForm.querySelector('#capacity');
-var formTitle = noticeForm.querySelector('#title');
-var formPrice = noticeForm.querySelector('#price');
-var formType = noticeForm.querySelector('#type');
+var validNoticeForm = document.querySelector('.notice__form');
+var formRooms = validNoticeForm.querySelector('#room_number');
+var formCapacity = validNoticeForm.querySelector('#capacity');
+var formTitle = validNoticeForm.querySelector('#title');
+var formPrice = validNoticeForm.querySelector('#price');
+var formType = validNoticeForm.querySelector('#type');
 var capacityOptionElements = Array.from(formCapacity);
 
 
@@ -453,8 +462,8 @@ formType.addEventListener('change', getChangePrice);
 formPrice.addEventListener('invalid', getChangePrice);
 
 
-var formTimeIn = noticeForm.querySelector('#timein');
-var formTimeOut = noticeForm.querySelector('#timeout');
+var formTimeIn = validNoticeForm.querySelector('#timein');
+var formTimeOut = validNoticeForm.querySelector('#timeout');
 
 
 var getSyncTimeIn = function (evt) {
@@ -465,3 +474,5 @@ var getSyncTimeIn = function (evt) {
   }
 };
 formTimeIn.addEventListener('change', getSyncTimeIn);
+
+// ....... Конец form.js
