@@ -161,4 +161,5 @@
   };
   var allOffers = makeRandomOffers();
   window.data = allOffers;
+  console.log(ApartmentsTypes);
 })();
