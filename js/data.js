@@ -122,14 +122,13 @@
     return arr.slice(getShuffleArray(arr));
   };
 
-  var ESC_KEYCODE = 27;
 
   var makeRandomOffers = function () {
     var offersResult = [];
     var shuffledAvatars = getShuffleArray(AVATARS);
     var shuffledTitles = getShuffleArray(TITLES);
 
-    for (var i = 0; i < OFFER_COUNT; i++) {
+    for (var i = 0; i < window.OFFER_COUNT; i++) {
 
       var randomLocationX = getRandomNumRange(300, 900);
       var randomLocationY = getRandomNumRange(100, 500);
@@ -161,5 +160,4 @@
   };
   var allOffers = makeRandomOffers();
   window.data = allOffers;
-  console.log(ApartmentsTypes);
 })();

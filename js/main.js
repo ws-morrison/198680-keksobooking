@@ -170,7 +170,7 @@
 //     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + bungaloPrice + ' \u20bd');
 //
 //   } else if (formType.value === 'house') {
-// 
+//
 //     formPrice.min = housePrice;
 //     formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + housePrice + ' \u20bd');
 //   } else if (formType.value === 'palace') {

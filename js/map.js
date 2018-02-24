@@ -1,12 +1,10 @@
 'use strict';
 (function () {
-  'use strict';
 
 
   // //////// Файл map.js Рендер пинов, карточек, их отражение на карте и события
 
   var ESC_KEYCODE = 27;
-
 
   // Рендер пинов
   var getPin = function (offer, id) {
