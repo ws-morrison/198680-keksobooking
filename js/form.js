@@ -85,26 +85,26 @@
   var bungaloPrice = 1000;
   var housePrice = 5000;
   var palacePrice = 10000;
-
+  var inValidTypeMessage = 'Для данного типа жилья цена не может быть ниже ';
   var getChangePrice = function () {
 
     if (formType.value === 'flat') {
 
       formPrice.min = flatPrice;
-      formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + flatPrice + ' \u20bd');
+      formPrice.setCustomValidity(inValidTypeMessage + flatPrice + ' \u20bd');
     } else if (formType.value === 'bungalo') {
 
       formPrice.min = bungaloPrice;
-      formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + bungaloPrice + ' \u20bd');
+      formPrice.setCustomValidity(inValidTypeMessage + bungaloPrice + ' \u20bd');
 
     } else if (formType.value === 'house') {
 
       formPrice.min = housePrice;
-      formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + housePrice + ' \u20bd');
+      formPrice.setCustomValidity(inValidTypeMessage + housePrice + ' \u20bd');
     } else if (formType.value === 'palace') {
 
       formPrice.min = palacePrice;
-      formPrice.setCustomValidity('Для данного типа жилья цена не может быть ниже ' + palacePrice + ' \u20bd');
+      formPrice.setCustomValidity(inValidTypeMessage + palacePrice + ' \u20bd');
     }
   };
 
