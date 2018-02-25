@@ -104,5 +104,5 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-//   ....... Kонец filters.js
+//....... Kонец filters.js
 })();
