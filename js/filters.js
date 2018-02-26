@@ -70,10 +70,23 @@
   };
   formReset.addEventListener('click', getFormReset);
 
+  // Перетаскивание
+  // var parentMainPin = document.querySelector('.map__pins');
+  // var coordLimits = {
+  //   top: parentMainPin.offsetTop,
+  //   right: parentMainPin.offsetWidth + parentMainPin.OffsetLeft - mapMainPin.offsetWidth,
+  //   bottom: parentMainPin.offsetHeight + parentMainPin.offsetTop - mapMainPin.offsetHeight,
+  //   left: parentMainPin.offsetLeft
+  // }
+  //
+  // var MAIN_PIN_OFFSET_X = 50;
+  // var MAIN_PIN_OFFSET_Y = 50;
+  // var pinOffsetMinY = 150;
+  // var pinOffsetMaxY = 500;
+
 
   mapMainPin.addEventListener('mousedown', function (evt) {
     fadeOff();
-    evt.preventDefault();
 
     var startCoords = {
       x: evt.clientX,
@@ -83,8 +96,8 @@
       moveEvt.preventDefault();
 
       var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
+        x: moveEvt.clientX - startCoords.x,
+        y: moveEvt.clientY - startCoords.y
       };
 
       startCoords = {
@@ -92,8 +105,17 @@
         y: moveEvt.clientY
       };
 
-      mapMainPin.style.top = (mapMainPin.offsetTop - shift.y) + 'px';
-      mapMainPin.style.left = (mapMainPin.offsetLeft - shift.x) + 'px';
+      var shiftOffsetX = mapMainPin.offsetLeft + shift.x;
+      var shiftOffsetY = mapMainPin.offsetTop + shift.y;
+
+      shiftOffsetY = shiftOffsetY < 150 ? 150 : shiftOffsetY;
+      shiftOffsetY = shiftOffsetY > 650 ? 650 : shiftOffsetY;
+
+      shiftOffsetX = shiftOffsetX < 70 ? 70 : shiftOffsetX;
+      shiftOffsetX = shiftOffsetX > 1130 ? 1130 : shiftOffsetX;
+
+      mapMainPin.style.top = shiftOffsetY + 'px';
+      mapMainPin.style.left = shiftOffsetX + 'px';
     };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
@@ -103,6 +125,14 @@
     };
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+
   });
-//....... Kонец filters.js
+
+
+  // Передает клика если нажать на пин
+  // mapMainPin.addEventListener('mouseup', function (evt) {
+  //   console.log(evt.clientX, evt.clientY);
+  // });
+
+  // ....... Kонец filters.js
 })();
