@@ -90,6 +90,7 @@
       return;
     }
     mainMap.replaceChild(docFragmnet, anotherArticle);
+    document.addEventListener('keydown', onCloseButtonKeydown);
   };
 
 
@@ -97,21 +98,22 @@
     var closeCard = document.querySelector('.map__card');
     closeCard.classList.add('hidden');
   };
+
   var onCloseButtonClick = function (evt) {
     if (evt.target.classList.contains('popup__close')) {
       closeCurrentOffer();
     }
   };
+
   var onCloseButtonKeydown = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       closeCurrentOffer();
       document.removeEventListener('keydown', closeCurrentOffer);
     }
   };
-
   document.addEventListener('click', onCloseButtonClick);
-  document.addEventListener('keydown', onCloseButtonKeydown);
-  document.removeEventListener('keydown', closeCurrentOffer);
+  // document.addEventListener('keydown', onCloseButtonKeydown);
+  // document.removeEventListener('keydown', closeCurrentOffer);
 
   // Убирает map--faded поставленный по умолчанию
   var removeDefaultFade = function () {
