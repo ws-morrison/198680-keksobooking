@@ -4,10 +4,16 @@
 
   // Прячет пины. Добавляет всем пинам класс .hidden
   // Модуль активного и неактивного состояний
+
   var hideButtons = document.querySelectorAll('.map__pin');
   var mapLayer = document.querySelector('.map');
   var mapMainPin = document.querySelector('.map__pin--main');
   var noticeForm = document.querySelector('.notice__form');
+  var testAddress = document.querySelector('#address');
+
+  var pinX = mapMainPin.clientWidth;
+  var pinY = mapMainPin.clientHeight;
+
   var getFadedPins = function () {
     for (var i = 0; i < hideButtons.length; i++) {
       hideButtons[i].classList.add('hidden');
@@ -52,6 +58,7 @@
   };
   document.addEventListener('DOMContentLoaded', getDisabledInputOn);
 
+
   var getDisabledInputOff = function () {
     for (var i = 0; i < formFieldset.length; i++) {
       formFieldset[i].removeAttribute('disabled', false);
@@ -62,29 +69,8 @@
   // Убирает затемнение
   mapMainPin.addEventListener('mouseup', fadeOff);
 
-  // Сброс активного состояния
-  var formReset = noticeForm.querySelector('.form__reset');
-  var getFormReset = function () {
-    fadeOn();
-    getDisabledInputOn();
-  };
-  formReset.addEventListener('click', getFormReset);
 
   // Перетаскивание
-  // var parentMainPin = document.querySelector('.map__pins');
-  // var coordLimits = {
-  //   top: parentMainPin.offsetTop,
-  //   right: parentMainPin.offsetWidth + parentMainPin.OffsetLeft - mapMainPin.offsetWidth,
-  //   bottom: parentMainPin.offsetHeight + parentMainPin.offsetTop - mapMainPin.offsetHeight,
-  //   left: parentMainPin.offsetLeft
-  // }
-  //
-  // var MAIN_PIN_OFFSET_X = 50;
-  // var MAIN_PIN_OFFSET_Y = 50;
-  // var pinOffsetMinY = 150;
-  // var pinOffsetMaxY = 500;
-
-
   mapMainPin.addEventListener('mousedown', function (evt) {
     fadeOff();
 
@@ -92,6 +78,7 @@
       x: evt.clientX,
       y: evt.clientY
     };
+
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
@@ -117,6 +104,8 @@
       mapMainPin.style.top = shiftOffsetY + 'px';
       mapMainPin.style.left = shiftOffsetX + 'px';
     };
+
+
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
@@ -128,11 +117,31 @@
 
   });
 
+  // Записывает координаты в Адрес
+  var setAdress = function () {
+    testAddress.value = Math.round((mapMainPin.offsetLeft + (pinX / 2))) + ', ' + Math.round((mapMainPin.offsetTop + pinY));
+  };
+  mapMainPin.addEventListener('mousemove', setAdress);
 
-  // Передает клика если нажать на пин
-  // mapMainPin.addEventListener('mouseup', function (evt) {
-  //   console.log(evt.clientX, evt.clientY);
-  // });
+
+  var mainPinOffsetX = mapMainPin.offsetLeft;
+  var mainPinOffsetY = mapMainPin.offsetTop;
+
+  // Сброс активного состояния
+  var formReset = noticeForm.querySelector('.form__reset');
+  var getFormReset = function () {
+    fadeOn();
+    getDisabledInputOn();
+
+    // Сбрасывает координаты главного пина
+    var setMainPinOnStart = function () {
+      mapMainPin.style.left = mainPinOffsetX + 'px';
+      mapMainPin.style.top = mainPinOffsetY + 'px';
+    };
+    setMainPinOnStart();
+  };
+  formReset.addEventListener('click', getFormReset);
 
   // ....... Kонец filters.js
+
 })();
