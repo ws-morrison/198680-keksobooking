@@ -99,10 +99,7 @@
       closeCard.classList.add('hidden');
     }
   };
-  // var closeCurrentOffer = function () {
-  //   var closeCard = document.querySelector('.map__card');
-  //   closeCard.classList.add('hidden');
-  // };
+
 
   var onCloseButtonClick = function (evt) {
     if (evt.target.classList.contains('popup__close')) {
@@ -113,12 +110,9 @@
   var onCloseButtonKeydown = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       window.map.closeCurrentOffer();
-      // document.removeEventListener('keydown', window.map.closeCurrentOffer);
     }
   };
   document.addEventListener('click', onCloseButtonClick);
-  // document.addEventListener('keydown', onCloseButtonKeydown);
-  // document.removeEventListener('keydown', window.map.closeCurrentOffer);
 
   // Убирает map--faded поставленный по умолчанию
   var removeDefaultFade = function () {
