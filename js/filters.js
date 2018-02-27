@@ -130,6 +130,7 @@
   // Сброс активного состояния
   var formReset = noticeForm.querySelector('.form__reset');
   var getFormReset = function () {
+    window.map.closeCurrentOffer();
     fadeOn();
     getDisabledInputOn();
 

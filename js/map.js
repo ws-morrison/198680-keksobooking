@@ -81,6 +81,7 @@
 
 
   var renderOffer = function (offerObject) {
+    document.addEventListener('keydown', onCloseButtonKeydown);
     var docFragmnet = document.createDocumentFragment();
     var offerCard = createCardOffer(offerObject);
     docFragmnet.appendChild(offerCard);
@@ -90,30 +91,34 @@
       return;
     }
     mainMap.replaceChild(docFragmnet, anotherArticle);
-    document.addEventListener('keydown', onCloseButtonKeydown);
   };
 
-
-  var closeCurrentOffer = function () {
-    var closeCard = document.querySelector('.map__card');
-    closeCard.classList.add('hidden');
+  window.map = {
+    closeCurrentOffer: function () {
+      var closeCard = document.querySelector('.map__card');
+      closeCard.classList.add('hidden');
+    }
   };
+  // var closeCurrentOffer = function () {
+  //   var closeCard = document.querySelector('.map__card');
+  //   closeCard.classList.add('hidden');
+  // };
 
   var onCloseButtonClick = function (evt) {
     if (evt.target.classList.contains('popup__close')) {
-      closeCurrentOffer();
+      window.map.closeCurrentOffer();
     }
   };
 
   var onCloseButtonKeydown = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
-      closeCurrentOffer();
-      document.removeEventListener('keydown', closeCurrentOffer);
+      window.map.closeCurrentOffer();
+      // document.removeEventListener('keydown', window.map.closeCurrentOffer);
     }
   };
   document.addEventListener('click', onCloseButtonClick);
   // document.addEventListener('keydown', onCloseButtonKeydown);
-  // document.removeEventListener('keydown', closeCurrentOffer);
+  // document.removeEventListener('keydown', window.map.closeCurrentOffer);
 
   // Убирает map--faded поставленный по умолчанию
   var removeDefaultFade = function () {
