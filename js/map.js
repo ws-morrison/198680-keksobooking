@@ -23,15 +23,16 @@
     if (evt.target.tagName === 'IMG') {
       pinElement = evt.target.parentNode;
     }
-    renderOffer(window.data[pinElement.dataset.index]);
+    renderOffer([pinElement.dataset.index]);
   };
 
 
   // Рендерит и показывает карточку по клику на пин
   var mainMap = document.querySelector('.map');
   var mapTemplate = document.querySelector('template').content;
-  var renderPins = function (offersArray) {
 
+
+  window.backend.load(function (offersArray) {
     var docFragmnet = document.createDocumentFragment();
     offersArray.forEach(function (offer, index) {
       var newPin = getPin(offer, index);
@@ -39,8 +40,19 @@
       docFragmnet.appendChild(newPin);
     });
     mainMap.appendChild(docFragmnet);
-  };
-  renderPins(window.data);
+  });
+
+
+  // var renderPins = function (offersArray) {
+  // var docFragmnet = document.createDocumentFragment();
+  // offersArray.forEach(function (offer, index) {
+  //   var newPin = getPin(offer, index);
+  //   newPin.addEventListener('click', onPinClick);
+  //   docFragmnet.appendChild(newPin);
+  // });
+  // mainMap.appendChild(docFragmnet);
+  // };
+  // renderPins(window.data);
 
 
   // Добавляет иконки Features

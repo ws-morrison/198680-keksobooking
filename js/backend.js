@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
-  var SERVER_URL = '';
+  var SERVER_URL = 'https://js.dump.academy/keksobooking';
   var TIMEOUT = 10000;
+  var cb = 'https://js.dump.academy/keksobooking/data?callback';
 
   var setup = function (loadHandler, errorHandler) {
 
@@ -54,8 +55,10 @@
     xhr.send();
   }
 
+
   window.backend = {
     upload,
     load
   };
+
 })();
