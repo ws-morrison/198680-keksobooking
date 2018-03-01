@@ -1,7 +1,6 @@
 'use strict';
 (function () {
-  // ///////// Файл form.js
-  // Валидация формы
+
   var NOT_FOR_GUESTS_OPTION = 0;
   var DEFAULT_ROOMS = '1';
   var MAX_ROOMS = 100;
@@ -12,7 +11,30 @@
   var formTitle = validNoticeForm.querySelector('#title');
   var formPrice = validNoticeForm.querySelector('#price');
   var formType = validNoticeForm.querySelector('#type');
+  var formTimeIn = validNoticeForm.querySelector('#timein');
+  var formTimeOut = validNoticeForm.querySelector('#timeout');
+  // var inputs = validNoticeForm.querySelectorAll('input');
   var capacityOptionElements = Array.from(formCapacity);
+
+
+  var flatPrice = 0;
+  var bungaloPrice = 1000;
+  var housePrice = 5000;
+  var palacePrice = 10000;
+  // var inValidTypeMessage = 'Для данного типа жилья цена не может быть ниже ';
+
+  // inputs.validity = {
+  //   valid: false, // Поле валидно
+  //   customError: false, // Установленно специальное сообщение ошибки
+  //   patternMismatch: false, // Значение не удовлетворяет шаблону, установленному в атрибуте pattern
+  //   rangeOverflow: false, // Значение превосходит атрибут max
+  //   rangeUnderflow: true, // Значение меньше атрибута min
+  //   stepMismatch: true, // Значение не соответствует указаному шагу
+  //   tooLong: false, // Значение слишком длинное
+  //   tooShort: false, // Значение слишком короткое
+  //   typeMismatch: false, // Значение не соответствует указаному атрибуту type
+  //   valueMissing: false // Отсутствует обязательное значение
+  // };
 
 
   var getValidTitle = function () {
@@ -22,11 +44,8 @@
       formTitle.setCustomValidity('Заголовок слишком длинный. Длина заголовка должна быть от 30 до 100 символов');
     } else if (formTitle.validity.valueMissing) {
       formTitle.setCustomValidity('Обязательное поле');
-    } else {
-      formTitle.setCustomValidity('');
     }
   };
-  formTitle.addEventListener('invalid', getValidTitle);
 
 
   var getValidPrice = function () {
@@ -38,7 +57,6 @@
       formPrice.setCustomValidity('');
     }
   };
-  formPrice.addEventListener('invalid', getValidPrice);
 
 
   var getGuestOptions = function () {
@@ -78,42 +96,22 @@
   };
 
 
-  formRooms.addEventListener('change', getGuestOptions);
-  getFormToDefault();
-
-  var flatPrice = 0;
-  var bungaloPrice = 1000;
-  var housePrice = 5000;
-  var palacePrice = 10000;
-  var inValidTypeMessage = 'Для данного типа жилья цена не может быть ниже ';
   var getChangePrice = function () {
-
     if (formType.value === 'flat') {
 
       formPrice.min = flatPrice;
-      formPrice.setCustomValidity(inValidTypeMessage + flatPrice + ' \u20bd');
     } else if (formType.value === 'bungalo') {
 
       formPrice.min = bungaloPrice;
-      formPrice.setCustomValidity(inValidTypeMessage + bungaloPrice + ' \u20bd');
 
     } else if (formType.value === 'house') {
 
       formPrice.min = housePrice;
-      formPrice.setCustomValidity(inValidTypeMessage + housePrice + ' \u20bd');
     } else if (formType.value === 'palace') {
 
       formPrice.min = palacePrice;
-      formPrice.setCustomValidity(inValidTypeMessage + palacePrice + ' \u20bd');
     }
   };
-
-  formType.addEventListener('change', getChangePrice);
-  formPrice.addEventListener('invalid', getChangePrice);
-
-
-  var formTimeIn = validNoticeForm.querySelector('#timein');
-  var formTimeOut = validNoticeForm.querySelector('#timeout');
 
 
   var getSyncTimeIn = function (evt) {
@@ -123,5 +121,16 @@
       formTimeIn.value = formTimeOut.value;
     }
   };
+
+  getFormToDefault();
+
+  formTitle.addEventListener('invalid', getValidTitle);
+  formPrice.addEventListener('invalid', getValidPrice);
+  formPrice.addEventListener('invalid', getChangePrice);
   formTimeIn.addEventListener('change', getSyncTimeIn);
+  formTimeOut.addEventListener('change', getSyncTimeIn);
+  formRooms.addEventListener('change', getGuestOptions);
+  formType.addEventListener('change', getChangePrice);
+
+
 })();

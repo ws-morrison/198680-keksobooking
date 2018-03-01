@@ -13,12 +13,12 @@
 
   var mainMap = document.querySelector('.map');
   var mapTemplate = document.querySelector('template').content;
-  
+
 
   // Рендер пинов
   var getPin = function (offer, id, additionalClass) {
     var pinElement = mapTemplate.querySelector('.map__pin').cloneNode(true);
-    
+
     pinElement.style.left = offer.location.x + 'px';
     pinElement.style.top = offer.location.y + 'px';
     pinElement.dataset.index = id;
@@ -27,7 +27,7 @@
     if (additionalClass) {
       pinElement.classList.add(additionalClass);
     }
-    
+
     return pinElement;
   };
 
@@ -40,11 +40,11 @@
     var pinElement = evt.currentTarget;
     renderOffer(window.data[pinElement.dataset.index]);
   };
-  
+
   var renderPins = function (offersArray, additionalClass) {
 
     var docFragmnet = document.createDocumentFragment();
-    
+
     offersArray.forEach(function (offer, index) {
       var newPin = getPin(offer, index, additionalClass);
       newPin.addEventListener('click', onPinClick);
@@ -89,13 +89,13 @@
   };
 
   var addCloseCardOfferListeners = function(offerCard) {
-    var closeBtn = offerCard.querySelector('.popup__close');    
+    var closeBtn = offerCard.querySelector('.popup__close');
     closeBtn.addEventListener('click', onCloseButtonClick);
     document.addEventListener('keydown', onCloseButtonKeydown);
   }
 
   var dropCLoseCardOfferListeners = function(offerCard) {
-    var closeBtn = offerCard.querySelector('.popup__close'); 
+    var closeBtn = offerCard.querySelector('.popup__close');
     closeBtn.removeEventListener('click', onCloseButtonClick);
     document.removeEventListener('keydown', onCloseButtonKeydown);
   }
@@ -103,13 +103,13 @@
   var renderOffer = function (offerObject) {
     var docFragmnet = document.createDocumentFragment();
     var offerCard = createCardOffer(offerObject);
-    
-    addCloseCardOfferListeners(offerCard);  
-    
+
+    addCloseCardOfferListeners(offerCard);
+
     docFragmnet.appendChild(offerCard);
-    
+
     var anotherArticle = mainMap.querySelector('.map__card');
-    
+
     if (!anotherArticle) {
       mainMap.appendChild(docFragmnet);
       return;
@@ -124,7 +124,7 @@
     }
   };
 
-  var onCloseButtonKeydown = function (evt) {    
+  var onCloseButtonKeydown = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       var offerCard = mainMap.querySelector('.map__card');
       dropCLoseCardOfferListeners(offerCard);
@@ -144,20 +144,20 @@
     fadeMap.classList.remove('map--faded');
   };
 
- 
-   
-  
+
+
+
   removeDefaultFade();
-  
+
 
   window.backend.load(function (data) {
     window.data = data;
-    renderPins(window.data, 'hidden');   
+    renderPins(window.data, 'hidden');
   });
 
   window.map = {
     renderPins,
-    closeCurrentOffer    
+    closeCurrentOffer
   };
 
 })();

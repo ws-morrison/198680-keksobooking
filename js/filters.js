@@ -15,11 +15,11 @@
 
   var hidePins = function () {
     var hideButtons = document.querySelectorAll('.map__pin');
-    
+
     for (var i = 0; i < hideButtons.length; i++) {
       if (hideButtons[i].classList.contains('map__pin--main')) {
         continue;
-      }      
+      }
       hideButtons[i].classList.add('hidden');
     }
     return hideButtons;
@@ -27,7 +27,7 @@
 
   var showPins = function () {
     var hideButtons = document.querySelectorAll('.map__pin');
-    
+
     for (var i = 0; i < hideButtons.length; i++) {
       hideButtons[i].classList.remove('hidden');
     }
@@ -45,7 +45,7 @@
   fadeOn();
 
 
- 
+
 
 
   // Убирает затемнение для карточки, фильтра, пинов
@@ -138,6 +138,7 @@
   // Сброс активного состояния
   var formReset = noticeForm.querySelector('.form__reset');
   var getFormReset = function () {
+
     fadeOn();
     getDisabledInputOn();
     window.map.closeCurrentOffer();
