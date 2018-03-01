@@ -32,11 +32,6 @@
   };
 
   var onPinClick = function (evt) {
-    // var pinElement = null;
-    // pinElement = evt.target;
-    // if (evt.target.tagName === 'IMG') {
-    //   pinElement = evt.target.parentNode;
-    // }
     var pinElement = evt.currentTarget;
     renderOffer(window.data[pinElement.dataset.index]);
   };
@@ -145,8 +140,6 @@
   };
 
 
-
-
   removeDefaultFade();
 
 
@@ -159,5 +152,4 @@
     renderPins,
     closeCurrentOffer
   };
-
 })();
