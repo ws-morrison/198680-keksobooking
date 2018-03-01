@@ -13,7 +13,6 @@
   var formType = validNoticeForm.querySelector('#type');
   var formTimeIn = validNoticeForm.querySelector('#timein');
   var formTimeOut = validNoticeForm.querySelector('#timeout');
-  // var inputs = validNoticeForm.querySelectorAll('input');
   var capacityOptionElements = Array.from(formCapacity);
 
 
@@ -30,9 +29,9 @@
       formTitle.setCustomValidity('Заголовок слишком длинный. Длина заголовка должна быть от 30 до 100 символов');
     } else if (formTitle.validity.valueMissing) {
       formTitle.setCustomValidity('Обязательное поле');
+
     }
   };
-
 
   var getValidPrice = function () {
     if (formPrice.validity.rangeOverflow) {
@@ -43,7 +42,6 @@
       formPrice.setCustomValidity('');
     }
   };
-
 
   var getGuestOptions = function () {
     var selectedOptionValue = parseInt(formRooms.value, 10);
@@ -68,11 +66,11 @@
     }
   };
 
-
   var getFormToDefault = function () {
     formRooms.value = DEFAULT_ROOMS;
     formCapacity.placeholder = DEFAULT_ROOMS;
     formCapacity.value = DEFAULT_ROOMS;
+
 
     capacityOptionElements.forEach(function (item) {
       if (!item.selected) {
@@ -80,7 +78,6 @@
       }
     });
   };
-
 
   var getChangePrice = function () {
     if (formType.value === 'flat') {
@@ -99,7 +96,6 @@
     }
   };
 
-
   var getSyncTimeIn = function (evt) {
     if (evt.target === formTimeIn) {
       formTimeOut.value = formTimeIn.value;
@@ -109,6 +105,7 @@
   };
 
   getFormToDefault();
+
 
   formTitle.addEventListener('invalid', getValidTitle);
   formPrice.addEventListener('invalid', getValidPrice);

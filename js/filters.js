@@ -6,12 +6,23 @@
   // Модуль активного и неактивного состояний
 
   var mapLayer = document.querySelector('.map');
+  var mapOverlay = document.querySelector('.map__pinsoverlay');
   var mapMainPin = document.querySelector('.map__pin--main');
   var noticeForm = document.querySelector('.notice__form');
-  var testAddress = document.querySelector('#address');
+  var formAddress = document.querySelector('#address');
+  var formPrice = document.querySelector('#price');
+  var formTitle = document.querySelector('#title');
+  var formFieldset = noticeForm.querySelectorAll('fieldset');
+  var formReset = noticeForm.querySelector('.form__reset');
+
 
   var pinX = mapMainPin.clientWidth;
   var pinY = mapMainPin.clientHeight;
+
+
+  var mainPinOffsetX = mapMainPin.offsetLeft;
+  var mainPinOffsetY = mapMainPin.offsetTop;
+
 
   var hidePins = function () {
     var hideButtons = document.querySelectorAll('.map__pin');
@@ -34,7 +45,6 @@
     return hideButtons;
   };
 
-
   // Добавляет затемнение для карточки, фильтра, пинов
   var fadeOn = function () {
     noticeForm.classList.add('notice__form--disabled');
@@ -42,11 +52,7 @@
     mapMainPin.classList.remove('hidden');
     hidePins();
   };
-  fadeOn();
-
-
-
-
+  // fadeOn();
 
   // Убирает затемнение для карточки, фильтра, пинов
   var fadeOff = function () {
@@ -56,26 +62,18 @@
     getDisabledInputOff();
   };
 
-
   // Задает или убирает аттрибут disabled форме
-  var formFieldset = noticeForm.querySelectorAll('fieldset');
   var getDisabledInputOn = function () {
     for (var i = 0; i < formFieldset.length; i++) {
       formFieldset[i].setAttribute('disabled', true);
     }
   };
-  document.addEventListener('DOMContentLoaded', getDisabledInputOn);
-
 
   var getDisabledInputOff = function () {
     for (var i = 0; i < formFieldset.length; i++) {
       formFieldset[i].removeAttribute('disabled', false);
     }
   };
-
-
-  // Убирает затемнение
-  mapMainPin.addEventListener('mouseup', fadeOff);
 
 
   // Перетаскивание
@@ -103,11 +101,12 @@
       var shiftOffsetX = mapMainPin.offsetLeft + shift.x;
       var shiftOffsetY = mapMainPin.offsetTop + shift.y;
 
+
       shiftOffsetY = shiftOffsetY < 150 ? 150 : shiftOffsetY;
       shiftOffsetY = shiftOffsetY > 650 ? 650 : shiftOffsetY;
 
-      shiftOffsetX = shiftOffsetX < 70 ? 70 : shiftOffsetX;
-      shiftOffsetX = shiftOffsetX > 1130 ? 1130 : shiftOffsetX;
+      shiftOffsetX = shiftOffsetX < 0 ? 0 : shiftOffsetX;
+      shiftOffsetX = shiftOffsetX > mapOverlay.clientWidth ? mapOverlay.clientWidth : shiftOffsetX;
 
       mapMainPin.style.top = shiftOffsetY + 'px';
       mapMainPin.style.left = shiftOffsetX + 'px';
@@ -127,17 +126,16 @@
 
   // Записывает координаты в Адрес
   var setAdress = function () {
-    testAddress.value = Math.round((mapMainPin.offsetLeft + (pinX / 2))) + ', ' + Math.round((mapMainPin.offsetTop + pinY));
+    formAddress.value = Math.round((mapMainPin.offsetLeft + (pinX / 2))) + ', ' + Math.round((mapMainPin.offsetTop + pinY));
   };
-  mapMainPin.addEventListener('mousemove', setAdress);
 
-
-  var mainPinOffsetX = mapMainPin.offsetLeft;
-  var mainPinOffsetY = mapMainPin.offsetTop;
 
   // Сброс активного состояния
-  var formReset = noticeForm.querySelector('.form__reset');
   var getFormReset = function () {
+
+    formAddress.value = null;
+    formTitle.value = null;
+    formPrice.value = null;
 
     fadeOn();
     getDisabledInputOn();
@@ -151,8 +149,14 @@
     };
     setMainPinOnStart();
   };
-  formReset.addEventListener('click', getFormReset);
 
+
+  fadeOn();
+
+  document.addEventListener('DOMContentLoaded', getDisabledInputOn);
+  mapMainPin.addEventListener('mouseup', fadeOff);
+  formReset.addEventListener('click', getFormReset);
+  mapMainPin.addEventListener('mousemove', setAdress);
   // ....... Kонец filters.js
 
 })();
