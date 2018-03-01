@@ -1,8 +1,12 @@
 'use strict';
 
 (function () {
-  var SERVER_URL = 'https://js.dump.academy/keksobooking';
+  var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
+  var URL_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
   var TIMEOUT = 10000;
+  var HTTP_PAGE_NOT_FOUND = 404;
+  var HTTP_PAGE_SUCCESS = 200;
+  var HTTP_SERVER_ERROR = 500;
 
   var setup = function (loadHandler, errorHandler) {
 
@@ -11,13 +15,13 @@
 
     xhr.addEventListener('load', function () {
       switch (xhr.status) {
-        case 200:
+        case HTTP_PAGE_SUCCESS:
           loadHandler(xhr.response);
           break;
-        case 404:
+        case HTTP_PAGE_NOT_FOUND:
           errorHandler('Страница не найдена');
           break;
-        case 500:
+        case HTTP_SERVER_ERROR:
           errorHandler('Внутренняя ошибка сервера');
           break;
         default:
@@ -43,14 +47,14 @@
   var upload = function (data, loadHandler, errorHandler) {
     var xhr = setup(loadHandler, errorHandler);
 
-    xhr.open('POST', SERVER_URL);
+    xhr.open('POST', URL_UPLOAD);
     xhr.send(data);
   }
 
   var load = function (loadHandler, errorHandler) {
     var xhr = setup(loadHandler, errorHandler);
 
-    xhr.open('GET', SERVER_URL + '/data');
+    xhr.open('GET', URL_DOWNLOAD);
     xhr.send();
   }
 

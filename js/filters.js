@@ -5,7 +5,6 @@
   // Прячет пины. Добавляет всем пинам класс .hidden
   // Модуль активного и неактивного состояний
 
-  var hideButtons = document.querySelectorAll('.map__pin');
   var mapLayer = document.querySelector('.map');
   var mapMainPin = document.querySelector('.map__pin--main');
   var noticeForm = document.querySelector('.notice__form');
@@ -14,9 +13,23 @@
   var pinX = mapMainPin.clientWidth;
   var pinY = mapMainPin.clientHeight;
 
-  var getFadedPins = function () {
+  var hidePins = function () {
+    var hideButtons = document.querySelectorAll('.map__pin');
+    
     for (var i = 0; i < hideButtons.length; i++) {
+      if (hideButtons[i].classList.contains('map__pin--main')) {
+        continue;
+      }      
       hideButtons[i].classList.add('hidden');
+    }
+    return hideButtons;
+  };
+
+  var showPins = function () {
+    var hideButtons = document.querySelectorAll('.map__pin');
+    
+    for (var i = 0; i < hideButtons.length; i++) {
+      hideButtons[i].classList.remove('hidden');
     }
     return hideButtons;
   };
@@ -25,24 +38,19 @@
   // Добавляет затемнение для карточки, фильтра, пинов
   var fadeOn = function () {
     noticeForm.classList.add('notice__form--disabled');
-    getFadedPins();
     mapLayer.classList.add('map--faded');
     mapMainPin.classList.remove('hidden');
+    hidePins();
   };
   fadeOn();
 
 
-  var removeFadedPins = function () {
-    for (var i = 0; i < hideButtons.length; i++) {
-      hideButtons[i].classList.remove('hidden');
-    }
-    return hideButtons;
-  };
+ 
 
 
   // Убирает затемнение для карточки, фильтра, пинов
   var fadeOff = function () {
-    removeFadedPins();
+    showPins();
     mapLayer.classList.remove('map--faded');
     noticeForm.classList.remove('notice__form--disabled');
     getDisabledInputOff();

@@ -187,12 +187,11 @@
     }
     return offersResult;
   };
-  var allOffers = makeRandomOffers();
-  window.data = allOffers;
+  
+  // var allOffers = makeRandomOffers();
+  // window.data = allOffers;
 
-  // window.backend.load(function (data) {
-  //
-  // });
+  
 
 
 })();
