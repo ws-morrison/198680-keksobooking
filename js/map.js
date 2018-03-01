@@ -150,6 +150,6 @@
 
   window.map = {
     renderPins: renderPins,
-    closeCurrentOffer: renderPins
+    closeCurrentOffer: closeCurrentOffer
   };
 })();
