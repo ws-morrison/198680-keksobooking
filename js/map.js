@@ -83,17 +83,17 @@
     return cardElement;
   };
 
-  var addCloseCardOfferListeners = function(offerCard) {
+  var addCloseCardOfferListeners = function (offerCard) {
     var closeBtn = offerCard.querySelector('.popup__close');
     closeBtn.addEventListener('click', onCloseButtonClick);
     document.addEventListener('keydown', onCloseButtonKeydown);
-  }
+  };
 
-  var dropCLoseCardOfferListeners = function(offerCard) {
+  var dropCLoseCardOfferListeners = function (offerCard) {
     var closeBtn = offerCard.querySelector('.popup__close');
     closeBtn.removeEventListener('click', onCloseButtonClick);
     document.removeEventListener('keydown', onCloseButtonKeydown);
-  }
+  };
 
   var renderOffer = function (offerObject) {
     var docFragmnet = document.createDocumentFragment();
@@ -132,7 +132,7 @@
     if (closeCard) {
       closeCard.classList.add('hidden');
     }
-  }
+  };
 
   var removeDefaultFade = function () {
     var fadeMap = document.querySelector('.map');
@@ -149,7 +149,7 @@
   });
 
   window.map = {
-    renderPins,
-    closeCurrentOffer
+    renderPins: renderPins,
+    closeCurrentOffer: renderPins
   };
 })();

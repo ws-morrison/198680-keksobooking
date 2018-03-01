@@ -41,7 +41,7 @@
     xhr.timeout = TIMEOUT;
 
     return xhr;
-  }
+  };
 
 
   var upload = function (data, loadHandler, errorHandler) {
@@ -49,19 +49,19 @@
 
     xhr.open('POST', URL_UPLOAD);
     xhr.send(data);
-  }
+  };
 
   var load = function (loadHandler, errorHandler) {
     var xhr = setup(loadHandler, errorHandler);
 
     xhr.open('GET', URL_DOWNLOAD);
     xhr.send();
-  }
+  };
 
 
   window.backend = {
-    upload,
-    load
+    upload: upload,
+    load: load
   };
 
 })();
