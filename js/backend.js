@@ -4,9 +4,13 @@
   var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
   var URL_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
   var TIMEOUT = 10000;
-  var HTTP_PAGE_NOT_FOUND = 404;
-  var HTTP_PAGE_SUCCESS = 200;
-  var HTTP_SERVER_ERROR = 500;
+
+  var ErrorMessages = {
+    PAGE_NOT_FOUND: 404,
+    PAGE_SUCCESS: 200,
+    SERVER_ERROR: 500
+  };
+
 
   var setup = function (loadHandler, errorHandler) {
 
@@ -15,13 +19,13 @@
 
     xhr.addEventListener('load', function () {
       switch (xhr.status) {
-        case HTTP_PAGE_SUCCESS:
+        case ErrorMessages.PAGE_SUCCESS:
           loadHandler(xhr.response);
           break;
-        case HTTP_PAGE_NOT_FOUND:
+        case ErrorMessages.PAGE_NOT_FOUND:
           errorHandler('Страница не найдена');
           break;
-        case HTTP_SERVER_ERROR:
+        case ErrorMessages.SERVER_ERROR:
           errorHandler('Внутренняя ошибка сервера');
           break;
         default:

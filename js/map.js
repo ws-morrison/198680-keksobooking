@@ -14,8 +14,6 @@
   var mainMap = document.querySelector('.map');
   var mapTemplate = document.querySelector('template').content;
 
-
-  // Рендер пинов
   var getPin = function (offer, id, additionalClass) {
     var pinElement = mapTemplate.querySelector('.map__pin').cloneNode(true);
 
@@ -49,7 +47,6 @@
     mainMap.appendChild(docFragmnet);
   };
 
-  // Добавляет иконки Features
   var getFeaturesList = function (featuresArray) {
     var featuresList = '';
     for (var i = 0; i < featuresArray.length; i++) {
@@ -58,7 +55,6 @@
     return featuresList;
   };
 
-  // Добавляет фотографии PHOTOS
   var getPhotosList = function (photosArray) {
     var photosItem = '';
     for (var i = 0; i < photosArray.length; i++) {
@@ -67,7 +63,6 @@
     return photosItem;
   };
 
-  // Создает и клонирует карточку
   var createCardOffer = function (offerObject) {
     var cardElement = mapTemplate.querySelector('.map__card').cloneNode(true);
     cardElement.querySelector('h3').textContent = offerObject.offer.title;
@@ -148,8 +143,10 @@
     renderPins(window.data, 'hidden');
   });
 
+
   window.map = {
     renderPins: renderPins,
     closeCurrentOffer: closeCurrentOffer
   };
+
 })();
