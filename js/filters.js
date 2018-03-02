@@ -1,9 +1,5 @@
 'use strict';
 (function () {
-  // //////// Файл filters.js
-
-  // Прячет пины. Добавляет всем пинам класс .hidden
-  // Модуль активного и неактивного состояний
 
   var mapLayer = document.querySelector('.map');
   var mapOverlay = document.querySelector('.map__pinsoverlay');
@@ -45,16 +41,14 @@
     return hideButtons;
   };
 
-  // Добавляет затемнение для карточки, фильтра, пинов
+
   var fadeOn = function () {
     noticeForm.classList.add('notice__form--disabled');
     mapLayer.classList.add('map--faded');
     mapMainPin.classList.remove('hidden');
     hidePins();
   };
-  // fadeOn();
 
-  // Убирает затемнение для карточки, фильтра, пинов
   var fadeOff = function () {
     showPins();
     mapLayer.classList.remove('map--faded');
@@ -62,7 +56,7 @@
     getDisabledInputOff();
   };
 
-  // Задает или убирает аттрибут disabled форме
+
   var getDisabledInputOn = function () {
     for (var i = 0; i < formFieldset.length; i++) {
       formFieldset[i].setAttribute('disabled', true);
@@ -76,7 +70,6 @@
   };
 
 
-  // Перетаскивание
   mapMainPin.addEventListener('mousedown', function (evt) {
     fadeOff();
 
@@ -124,13 +117,11 @@
 
   });
 
-  // Записывает координаты в Адрес
   var setAdress = function () {
     formAddress.value = Math.round((mapMainPin.offsetLeft + (pinX / 2))) + ', ' + Math.round((mapMainPin.offsetTop + pinY));
   };
 
 
-  // Сброс активного состояния
   var getFormReset = function () {
 
     formAddress.value = null;
@@ -142,7 +133,6 @@
     window.map.closeCurrentOffer();
 
 
-    // Сбрасывает координаты главного пина
     var setMainPinOnStart = function () {
       mapMainPin.style.left = mainPinOffsetX + 'px';
       mapMainPin.style.top = mainPinOffsetY + 'px';
@@ -157,6 +147,5 @@
   mapMainPin.addEventListener('mouseup', fadeOff);
   formReset.addEventListener('click', getFormReset);
   mapMainPin.addEventListener('mousemove', setAdress);
-  // ....... Kонец filters.js
 
 })();
