@@ -49,6 +49,7 @@
     mainMap.appendChild(docFragmnet);
   };
 
+
   // Добавляет иконки Features
   var getFeaturesList = function (featuresArray) {
     var featuresList = '';
@@ -147,6 +148,7 @@
     window.data = data;
     renderPins(window.data, 'hidden');
   });
+
 
   window.map = {
     renderPins: renderPins,
