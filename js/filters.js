@@ -5,10 +5,16 @@
   var mapOverlay = document.querySelector('.map__pinsoverlay');
   var mapMainPin = document.querySelector('.map__pin--main');
   var noticeForm = document.querySelector('.notice__form');
-  var formAddress = document.querySelector('#address');
-  var formPrice = document.querySelector('#price');
-  var formTitle = document.querySelector('#title');
-  var formFieldset = noticeForm.querySelectorAll('fieldset');
+  var formType = noticeForm.querySelector('#type');
+  var formAddress = noticeForm.querySelector('#address');
+  var formPrice = noticeForm.querySelector('#price');
+  var formTitle = noticeForm.querySelector('#title');
+  var formRooms = noticeForm.querySelector('#room_number');
+  var formCapacity = noticeForm.querySelector('#capacity');
+  var formTimeIn = noticeForm.querySelector('#timein');
+  var formTimeOut = noticeForm.querySelector('#timeout');
+  var formText = noticeForm.querySelector('#description');
+  var formFieldset = document.querySelectorAll('fieldset');
   var formReset = noticeForm.querySelector('.form__reset');
 
 
@@ -43,9 +49,11 @@
 
 
   var fadeOn = function () {
+
     noticeForm.classList.add('notice__form--disabled');
     mapLayer.classList.add('map--faded');
     mapMainPin.classList.remove('hidden');
+
     hidePins();
   };
 
@@ -118,26 +126,34 @@
   });
 
   var setAdress = function () {
-    formAddress.value = Math.round((mapMainPin.offsetLeft + (pinX / 2))) + ', ' + Math.round((mapMainPin.offsetTop + pinY));
+    var setPinX = Math.round((mapMainPin.offsetLeft + (pinX / 2)));
+    var setPinY = Math.round((mapMainPin.offsetTop + pinY));
+    formAddress.value = setPinX + ', ' + setPinY;
   };
 
 
   var getFormReset = function () {
 
-    formAddress.value = null;
-    formTitle.value = null;
-    formPrice.value = null;
-
     fadeOn();
     getDisabledInputOn();
     window.map.closeCurrentOffer();
 
+    formAddress.value = null;
+    formTitle.value = null;
+    formPrice.value = null;
+    formText.value = null;
+    formType.value = 'flat';
+    formTimeIn.value = '12:00';
+    formTimeOut.value = '12:00';
+    formRooms.value = '1';
+    formCapacity.value = '3';
 
     var setMainPinOnStart = function () {
       mapMainPin.style.left = mainPinOffsetX + 'px';
       mapMainPin.style.top = mainPinOffsetY + 'px';
     };
     setMainPinOnStart();
+    setAdress();
   };
 
 
@@ -147,5 +163,6 @@
   mapMainPin.addEventListener('mouseup', fadeOff);
   formReset.addEventListener('click', getFormReset);
   mapMainPin.addEventListener('mousemove', setAdress);
+
 
 })();

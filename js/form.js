@@ -20,7 +20,7 @@
   var bungaloPrice = 1000;
   var housePrice = 5000;
   var palacePrice = 10000;
-
+  var inValidTypeMessage = 'Для данного типа жилья цена не может быть ниже ';
 
   var getValidTitle = function () {
     if (formTitle.validity.tooShort) {
@@ -29,11 +29,10 @@
       formTitle.setCustomValidity('Заголовок слишком длинный. Длина заголовка должна быть от 30 до 100 символов');
     } else if (formTitle.validity.valueMissing) {
       formTitle.setCustomValidity('Обязательное поле');
-
     }
   };
 
-  var getValidPrice = function () {
+  var getChangePrice = function () {
     if (formPrice.validity.rangeOverflow) {
       formPrice.setCustomValidity('Цена не может быть больше 1 000 000');
     } else if (formPrice.validity.valueMissing) {
@@ -51,6 +50,7 @@
         option.disabled = booleanValue;
       });
     };
+
     getOptionDisabled(capacityOptionElements, true);
 
     if (selectedOptionValue === MAX_ROOMS) {
@@ -79,21 +79,22 @@
     });
   };
 
-  var getChangePrice = function () {
+  var getValidPrice = function () {
     if (formType.value === 'flat') {
 
       formPrice.min = flatPrice;
     } else if (formType.value === 'bungalo') {
-
+      formPrice.setCustomValidity(inValidTypeMessage + bungaloPrice + ' \u20bd');
       formPrice.min = bungaloPrice;
 
     } else if (formType.value === 'house') {
-
+      formPrice.setCustomValidity(inValidTypeMessage + housePrice + ' \u20bd');
       formPrice.min = housePrice;
     } else if (formType.value === 'palace') {
-
+      formPrice.setCustomValidity(inValidTypeMessage + palacePrice + ' \u20bd');
       formPrice.min = palacePrice;
-    }
+    } else {
+      formPrice.setCustomValidity('');
   };
 
   var getSyncTimeIn = function (evt) {
@@ -109,7 +110,7 @@
 
   formTitle.addEventListener('invalid', getValidTitle);
   formPrice.addEventListener('invalid', getValidPrice);
-  formPrice.addEventListener('invalid', getChangePrice);
+  // formPrice.addEventListener('invalid', getChangePrice);
   formTimeIn.addEventListener('change', getSyncTimeIn);
   formTimeOut.addEventListener('change', getSyncTimeIn);
   formRooms.addEventListener('change', getGuestOptions);

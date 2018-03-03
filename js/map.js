@@ -3,7 +3,7 @@
 (function () {
 
   var ESC_KEYCODE = 27;
-
+  var pinsLimit = 5;
   var ApartmentsTypes = {
     flat: 'Квартира',
     house: 'Дом',
@@ -67,7 +67,7 @@
     var cardElement = mapTemplate.querySelector('.map__card').cloneNode(true);
     cardElement.querySelector('h3').textContent = offerObject.offer.title;
     cardElement.querySelector('h3+p').textContent = offerObject.offer.address;
-    cardElement.querySelector('.popup__price').textContent = offerObject.offer.price + ' \u00A5/ночь ';
+    cardElement.querySelector('.popup__price').textContent = offerObject.offer.price + ' \u20bd/ночь ';
     cardElement.querySelector('h4').textContent = ApartmentsTypes[offerObject.offer.type];
     cardElement.querySelector('h4+p').textContent = 'Комнат: ' + offerObject.offer.rooms + ' для ' + offerObject.offer.guests + '  гостей';
     cardElement.querySelector('p:nth-of-type(4)').textContent = 'Заезд: ' + offerObject.offer.checkin + ', выезд: ' + offerObject.offer.checkout;
@@ -140,9 +140,9 @@
 
   window.backend.load(function (data) {
     window.data = data;
+    window.data = data.slice(0, pinsLimit); // Кажется сомнительным решением, не понятно что будет при проверке фильтра
     renderPins(window.data, 'hidden');
   });
-
 
   window.map = {
     renderPins: renderPins,
