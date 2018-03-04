@@ -9,6 +9,29 @@
   var features = filtersForm.querySelectorAll('input[name="features"]');
 
 
+   var renderPinsAfterSetFilters = function () {
+    window.map.closeCurrentOffer();
+
+    window.map.removeAllPins();
+
+    window.map.advertsFiltered = setFilters();
+    window.map.renderPins(window.map.advertsFiltered);
+  }
+
+  var filterChangeHandler = function (evt) {
+    if (!evt.target.classList.contains('map__filter')
+        && evt.target.name !== 'features') {
+      return;
+    }
+    ;
+    window.debounce(renderPinsAfterSetFilters);
+
+  }
+
+  var bindFilters = function() {
+    filtersForm.addEventListener('change', filterChangeHandler);
+  }
+
   var setFilterValues = function (filterValue, itemValue) {
     return filterValue === 'any' || itemValue === filterValue;
   };
@@ -66,17 +89,7 @@
     });
   };
 
-  /*
-  var setTestFilters = function () {
-    setFilterValues();
-    setFilterPrice();
-    setFilterFeatures();
-    setFilters();
-    window.map.renderPins();
-  };
 
-  houseType.addEventListener('change', setTestFilters);
-  */
   window.setFilters = setFilters;
-
+  bindFilters();
 })();

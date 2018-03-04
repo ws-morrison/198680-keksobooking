@@ -31,7 +31,13 @@
 
   var onPinClick = function (evt) {
     var pinElement = evt.currentTarget;
-    renderOffer(window.data[pinElement.dataset.index]);
+
+    if (window.map.advertsFiltered.length === 0) {
+      return renderOffer(window.data[pinElement.dataset.index]);
+    }
+
+    return renderOffer(window.map.advertsFiltered[pinElement.dataset.index]);
+
   };
 
   var renderPins = function (offersArray, additionalClass) {
@@ -134,6 +140,18 @@
     fadeMap.classList.remove('map--faded');
   };
 
+  var removeAllPins = function () {
+    var allRenderedPins = document.querySelectorAll('.map__pin');
+
+    for (var i = 0; i < allRenderedPins.length; i++) {
+      if (allRenderedPins[i].classList.contains('map__pin--main')) {
+        continue;
+      }
+
+      mainMap.removeChild(allRenderedPins[i]);
+    }
+  }
+
 
   removeDefaultFade();
 
@@ -146,7 +164,9 @@
 
   window.map = {
     renderPins: renderPins,
-    closeCurrentOffer: closeCurrentOffer
+    closeCurrentOffer: closeCurrentOffer,
+    removeAllPins: removeAllPins,
+    advertsFiltered: []
   };
 
 })();
