@@ -15,26 +15,44 @@
   var formTimeOut = validNoticeForm.querySelector('#timeout');
   var capacityOptionElements = Array.from(formCapacity);
 
-
   var flatPrice = 0;
   var bungaloPrice = 1000;
   var housePrice = 5000;
   var palacePrice = 10000;
-  var inValidTypeMessage = 'Для данного типа жилья цена не может быть ниже ';
 
-  var getValidTitle = function () {
+
+  var validTitle = function () {
     if (formTitle.validity.tooShort) {
       formTitle.setCustomValidity('Заголовок слишком короткий. Длина заголовка должна быть от 30 до 100 символов');
     } else if (formTitle.validity.tooLong) {
       formTitle.setCustomValidity('Заголовок слишком длинный. Длина заголовка должна быть от 30 до 100 символов');
     } else if (formTitle.validity.valueMissing) {
       formTitle.setCustomValidity('Обязательное поле');
+    } else {
+      formTitle.setCustomValidity('');
     }
   };
 
-  var getChangePrice = function () {
+  var changePrice = function () {
+
+    if (formType.value === 'flat') {
+      formPrice.min = flatPrice;
+    } else if (formType.value === 'bungalo') {
+      formPrice.min = bungaloPrice;
+    } else if (formType.value === 'house') {
+      formPrice.min = housePrice;
+    } else if (formType.value === 'palace') {
+      formPrice.min = palacePrice;
+    }
+  };
+
+
+  var validPrice = function () {
+
     if (formPrice.validity.rangeOverflow) {
-      formPrice.setCustomValidity('Цена не может быть больше 1 000 000');
+      formPrice.setCustomValidity('Цена не может быть больше ' + formPrice.max);
+    } else if (formPrice.validity.rangeUnderflow) {
+      formPrice.setCustomValidity('Цена данного типа жилья от ' + formPrice.min);
     } else if (formPrice.validity.valueMissing) {
       formPrice.setCustomValidity('Обязательное поле');
     } else {
@@ -79,25 +97,7 @@
     });
   };
 
-  var getValidPrice = function () {
-    if (formType.value === 'flat') {
-
-      formPrice.min = flatPrice;
-    } else if (formType.value === 'bungalo') {
-      formPrice.setCustomValidity(inValidTypeMessage + bungaloPrice + ' \u20bd');
-      formPrice.min = bungaloPrice;
-
-    } else if (formType.value === 'house') {
-      formPrice.setCustomValidity(inValidTypeMessage + housePrice + ' \u20bd');
-      formPrice.min = housePrice;
-    } else if (formType.value === 'palace') {
-      formPrice.setCustomValidity(inValidTypeMessage + palacePrice + ' \u20bd');
-      formPrice.min = palacePrice;
-    } else {
-      formPrice.setCustomValidity('');
-  };
-
-  var getSyncTimeIn = function (evt) {
+  var syncTime = function (evt) {
     if (evt.target === formTimeIn) {
       formTimeOut.value = formTimeIn.value;
     } else if (evt.target === formTimeOut) {
@@ -107,14 +107,11 @@
 
   getFormToDefault();
 
-
-  formTitle.addEventListener('invalid', getValidTitle);
-  formPrice.addEventListener('invalid', getValidPrice);
-  // formPrice.addEventListener('invalid', getChangePrice);
-  formTimeIn.addEventListener('change', getSyncTimeIn);
-  formTimeOut.addEventListener('change', getSyncTimeIn);
+  formPrice.addEventListener('invalid', validPrice);
+  formTitle.addEventListener('invalid', validTitle);
+  formType.addEventListener('change', changePrice);
+  formTimeIn.addEventListener('change', syncTime);
+  formTimeOut.addEventListener('change', syncTime);
   formRooms.addEventListener('change', getGuestOptions);
-  formType.addEventListener('change', getChangePrice);
-
 
 })();
