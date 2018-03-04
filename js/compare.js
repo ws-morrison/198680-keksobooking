@@ -9,28 +9,27 @@
   var features = filtersForm.querySelectorAll('input[name="features"]');
 
 
-   var renderPinsAfterSetFilters = function () {
+  var renderPinsAfterSetFilters = function () {
     window.map.closeCurrentOffer();
 
     window.map.removeAllPins();
 
     window.map.advertsFiltered = setFilters();
     window.map.renderPins(window.map.advertsFiltered);
-  }
+  };
 
   var filterChangeHandler = function (evt) {
-    if (!evt.target.classList.contains('map__filter')
-        && evt.target.name !== 'features') {
+    if (!evt.target.classList.contains('map__filter') &&
+      evt.target.name !== 'features') {
       return;
     }
-    ;
     window.debounce(renderPinsAfterSetFilters);
 
-  }
+  };
 
-  var bindFilters = function() {
+  var bindFilters = function () {
     filtersForm.addEventListener('change', filterChangeHandler);
-  }
+  };
 
   var setFilterValues = function (filterValue, itemValue) {
     return filterValue === 'any' || itemValue === filterValue;
