@@ -64,7 +64,7 @@
   var getPhotosList = function (photosArray) {
     var photosItem = '';
     for (var i = 0; i < photosArray.length; i++) {
-      photosItem = '<li>' + '<img src =' + photosArray[i] + ' width = 60px, height = 60px style = "margin: 5px"></li>' + photosItem;
+      photosItem = '<li>' + '<img src =' + photosArray[i] + ' width = 55px, height = 55px style = "margin: 2px"></li>' + photosItem;
     }
     return photosItem;
   };
@@ -150,7 +150,7 @@
 
       mainMap.removeChild(allRenderedPins[i]);
     }
-  }
+  };
 
 
   removeDefaultFade();
