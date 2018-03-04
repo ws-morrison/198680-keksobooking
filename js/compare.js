@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  var FILTER_ELEMENT = 'features';
+  var PRICE_LOW = 10000;
+  var PRICE_HIGH = 50000;
+
   var filtersForm = document.querySelector('.map__filters');
   var houseType = filtersForm.querySelector('#housing-type');
   var housePrice = filtersForm.querySelector('#housing-price');
@@ -8,6 +12,28 @@
   var guestsNumber = filtersForm.querySelector('#housing-guests');
   var features = filtersForm.querySelectorAll('input[name="features"]');
 
+
+  var renderPinsAfterSetFilters = function () {
+    window.map.closeCurrentOffer();
+
+    window.map.removeAllPins();
+
+    window.map.advertsFiltered = setFilters();
+    window.map.renderPins(window.map.advertsFiltered);
+  };
+
+  var filterChangeHandler = function (evt) {
+    if (!evt.target.classList.contains('map__filter') &&
+      evt.target.name !== FILTER_ELEMENT) {
+      return;
+    }
+    window.debounce(renderPinsAfterSetFilters);
+
+  };
+
+  var bindFilters = function () {
+    filtersForm.addEventListener('change', filterChangeHandler);
+  };
 
   var setFilterValues = function (filterValue, itemValue) {
     return filterValue === 'any' || itemValue === filterValue;
@@ -18,11 +44,11 @@
 
     switch (currentValue) {
       case 'middle':
-        return price >= 10000 && price < 50000;
+        return price >= PRICE_LOW && price < PRICE_HIGH;
       case 'low':
-        return price < 10000;
+        return price < PRICE_LOW;
       case 'high':
-        return price >= 50000;
+        return price >= PRICE_HIGH;
       default:
         return true;
     }
@@ -66,17 +92,7 @@
     });
   };
 
-  /*
-  var setTestFilters = function () {
-    setFilterValues();
-    setFilterPrice();
-    setFilterFeatures();
-    setFilters();
-    window.map.renderPins();
-  };
 
-  houseType.addEventListener('change', setTestFilters);
-  */
   window.setFilters = setFilters;
-
+  bindFilters();
 })();
