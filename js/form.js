@@ -4,6 +4,10 @@
   var NOT_FOR_GUESTS_OPTION = 0;
   var DEFAULT_ROOMS = '1';
   var MAX_ROOMS = 100;
+  var PRICE_FLAT = 0;
+  var PRICE_BUNGALO = 1000;
+  var PRICE_HOUSE = 5000;
+  var PRICE_PALACE = 10000;
 
   var validNoticeForm = document.querySelector('.notice__form');
   var formRooms = validNoticeForm.querySelector('#room_number');
@@ -15,13 +19,8 @@
   var formTimeOut = validNoticeForm.querySelector('#timeout');
   var capacityOptionElements = Array.from(formCapacity);
 
-  var flatPrice = 0;
-  var bungaloPrice = 1000;
-  var housePrice = 5000;
-  var palacePrice = 10000;
 
-
-  var validTitle = function () {
+  var titleInvalidHandler = function () {
     if (formTitle.validity.tooShort) {
       formTitle.setCustomValidity('Заголовок слишком короткий. Длина заголовка должна быть от 30 до 100 символов');
     } else if (formTitle.validity.tooLong) {
@@ -33,21 +32,21 @@
     }
   };
 
-  var changePrice = function () {
+  var priceChangeHandler = function () {
 
     if (formType.value === 'flat') {
-      formPrice.min = flatPrice;
+      formPrice.min = PRICE_FLAT;
     } else if (formType.value === 'bungalo') {
-      formPrice.min = bungaloPrice;
+      formPrice.min = PRICE_BUNGALO;
     } else if (formType.value === 'house') {
-      formPrice.min = housePrice;
+      formPrice.min = PRICE_HOUSE;
     } else if (formType.value === 'palace') {
-      formPrice.min = palacePrice;
+      formPrice.min = PRICE_PALACE;
     }
   };
 
 
-  var validPrice = function () {
+  var priceInvalidHandler = function () {
 
     if (formPrice.validity.rangeOverflow) {
       formPrice.setCustomValidity('Цена не может быть больше ' + formPrice.max);
@@ -60,7 +59,7 @@
     }
   };
 
-  var getGuestOptions = function () {
+  var guestChangeHandler = function () {
     var selectedOptionValue = parseInt(formRooms.value, 10);
 
     var getOptionDisabled = function (optionsArray, booleanValue) {
@@ -97,7 +96,7 @@
     });
   };
 
-  var syncTime = function (evt) {
+  var timeChangeHandler = function (evt) {
     if (evt.target === formTimeIn) {
       formTimeOut.value = formTimeIn.value;
     } else if (evt.target === formTimeOut) {
@@ -107,11 +106,11 @@
 
   getFormToDefault();
 
-  formPrice.addEventListener('invalid', validPrice);
-  formTitle.addEventListener('invalid', validTitle);
-  formType.addEventListener('change', changePrice);
-  formTimeIn.addEventListener('change', syncTime);
-  formTimeOut.addEventListener('change', syncTime);
-  formRooms.addEventListener('change', getGuestOptions);
+  formPrice.addEventListener('invalid', priceInvalidHandler);
+  formTitle.addEventListener('invalid', titleInvalidHandler);
+  formType.addEventListener('change', priceChangeHandler);
+  formTimeIn.addEventListener('change', timeChangeHandler);
+  formTimeOut.addEventListener('change', timeChangeHandler);
+  formRooms.addEventListener('change', guestChangeHandler);
 
 })();

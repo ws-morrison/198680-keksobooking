@@ -1,6 +1,7 @@
 'use strict';
 (function () {
 
+
   var mapLayer = document.querySelector('.map');
   var mapOverlay = document.querySelector('.map__pinsoverlay');
   var mapMainPin = document.querySelector('.map__pin--main');
@@ -48,7 +49,7 @@
   };
 
 
-  var fadeOn = function () {
+  var fadeClickHandler = function () {
 
     noticeForm.classList.add('notice__form--disabled');
     mapLayer.classList.add('map--faded');
@@ -57,7 +58,7 @@
     hidePins();
   };
 
-  var fadeOff = function () {
+  var fadeRemoveClickHandler = function () {
     showPins();
     mapLayer.classList.remove('map--faded');
     noticeForm.classList.remove('notice__form--disabled');
@@ -79,14 +80,14 @@
 
 
   mapMainPin.addEventListener('mousedown', function (evt) {
-    fadeOff();
+    fadeRemoveClickHandler();
 
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
     };
 
-    var onMouseMove = function (moveEvt) {
+    var mouseMoveHandler = function (moveEvt) {
       moveEvt.preventDefault();
 
       var shift = {
@@ -114,14 +115,14 @@
     };
 
 
-    var onMouseUp = function (upEvt) {
+    var mouseUpHandler = function (upEvt) {
       upEvt.preventDefault();
 
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('mousemove', mouseMoveHandler);
+      document.removeEventListener('mouseup', mouseUpHandler);
     };
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mousemove', mouseMoveHandler);
+    document.addEventListener('mouseup', mouseUpHandler);
 
   });
 
@@ -134,7 +135,7 @@
 
   var getFormReset = function () {
 
-    fadeOn();
+    fadeClickHandler();
     getDisabledInputOn();
     window.map.closeCurrentOffer();
 
@@ -157,10 +158,10 @@
   };
 
 
-  fadeOn();
+  fadeClickHandler();
 
   document.addEventListener('DOMContentLoaded', getDisabledInputOn);
-  mapMainPin.addEventListener('mouseup', fadeOff);
+  mapMainPin.addEventListener('mouseup', fadeRemoveClickHandler);
   formReset.addEventListener('click', getFormReset);
   mapMainPin.addEventListener('mousemove', setAdress);
 

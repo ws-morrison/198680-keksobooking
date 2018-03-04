@@ -29,14 +29,14 @@
     return pinElement;
   };
 
-  var onPinClick = function (evt) {
+  var pinClickHandler = function (evt) {
     var pinElement = evt.currentTarget;
 
-    if (window.map.advertsFiltered.length === 0) {
+    if (window.map.filtredOffers.length === 0) {
       return renderOffer(window.data[pinElement.dataset.index]);
     }
 
-    return renderOffer(window.map.advertsFiltered[pinElement.dataset.index]);
+    return renderOffer(window.map.filtredOffers[pinElement.dataset.index]);
 
   };
 
@@ -46,7 +46,7 @@
 
     offersArray.forEach(function (offer, index) {
       var newPin = getPin(offer, index, additionalClass);
-      newPin.addEventListener('click', onPinClick);
+      newPin.addEventListener('click', pinClickHandler);
       docFragmnet.appendChild(newPin);
     });
 
@@ -86,14 +86,14 @@
 
   var addCloseCardOfferListeners = function (offerCard) {
     var closeBtn = offerCard.querySelector('.popup__close');
-    closeBtn.addEventListener('click', onCloseButtonClick);
-    document.addEventListener('keydown', onCloseButtonKeydown);
+    closeBtn.addEventListener('click', closeClickHandler);
+    document.addEventListener('keydown', closeKeydownHandler);
   };
 
   var dropCLoseCardOfferListeners = function (offerCard) {
     var closeBtn = offerCard.querySelector('.popup__close');
-    closeBtn.removeEventListener('click', onCloseButtonClick);
-    document.removeEventListener('keydown', onCloseButtonKeydown);
+    closeBtn.removeEventListener('click', closeClickHandler);
+    document.removeEventListener('keydown', closeKeydownHandler);
   };
 
   var renderOffer = function (offerObject) {
@@ -113,14 +113,14 @@
     mainMap.replaceChild(docFragmnet, anotherArticle);
   };
 
-  var onCloseButtonClick = function (evt) {
+  var closeClickHandler = function (evt) {
     if (evt.target.classList.contains('popup__close')) {
       dropCLoseCardOfferListeners(evt.target.parentNode);
       closeCurrentOffer();
     }
   };
 
-  var onCloseButtonKeydown = function (evt) {
+  var closeKeydownHandler = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       var offerCard = mainMap.querySelector('.map__card');
       dropCLoseCardOfferListeners(offerCard);
@@ -158,15 +158,17 @@
 
   window.backend.load(function (data) {
     window.data = data;
-    window.data = data.slice(0, pinsLimit); // Кажется сомнительным решением, не понятно что будет при проверке фильтра
-    renderPins(window.data, 'hidden');
+    window.filtredOffers = data;
+    if (window.filtredOffers) {
+      renderPins(window.filtredOffers.slice(0, pinsLimit), 'hidden');
+    }
   });
 
   window.map = {
     renderPins: renderPins,
     closeCurrentOffer: closeCurrentOffer,
     removeAllPins: removeAllPins,
-    advertsFiltered: []
+    filtredOffers: []
   };
 
 })();

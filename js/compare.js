@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  var FILTER_ELEMENT = 'features';
+  var PRICE_LOW = 10000;
+  var PRICE_HIGH = 50000;
+
   var filtersForm = document.querySelector('.map__filters');
   var houseType = filtersForm.querySelector('#housing-type');
   var housePrice = filtersForm.querySelector('#housing-price');
@@ -20,7 +24,7 @@
 
   var filterChangeHandler = function (evt) {
     if (!evt.target.classList.contains('map__filter') &&
-      evt.target.name !== 'features') {
+      evt.target.name !== FILTER_ELEMENT) {
       return;
     }
     window.debounce(renderPinsAfterSetFilters);
@@ -40,11 +44,11 @@
 
     switch (currentValue) {
       case 'middle':
-        return price >= 10000 && price < 50000;
+        return price >= PRICE_LOW && price < PRICE_HIGH;
       case 'low':
-        return price < 10000;
+        return price < PRICE_LOW;
       case 'high':
-        return price >= 50000;
+        return price >= PRICE_HIGH;
       default:
         return true;
     }
