@@ -72,13 +72,13 @@
   var createCardOffer = function (offerObject) {
     var cardElement = mapTemplate.querySelector('.map__card').cloneNode(true);
     cardElement.querySelector('h3').textContent = offerObject.offer.title;
-    cardElement.querySelector('h3+p').textContent = offerObject.offer.address;
+    cardElement.querySelector('small').textContent = offerObject.offer.address;
     cardElement.querySelector('.popup__price').textContent = offerObject.offer.price + ' \u20bd/ночь ';
     cardElement.querySelector('h4').textContent = ApartmentsTypes[offerObject.offer.type];
     cardElement.querySelector('h4+p').textContent = 'Комнат: ' + offerObject.offer.rooms + ' для ' + offerObject.offer.guests + '  гостей';
     cardElement.querySelector('p:nth-of-type(4)').textContent = 'Заезд: ' + offerObject.offer.checkin + ', выезд: ' + offerObject.offer.checkout;
     cardElement.querySelector('.popup__features').innerHTML = getFeaturesList(offerObject.offer.features);
-    cardElement.querySelector('p').textContent = offerObject.offer.description;
+    cardElement.querySelector('p:last-of-type').textContent = offerObject.offer.description;
     cardElement.querySelector('.popup__pictures').innerHTML = getPhotosList(offerObject.offer.photos);
     cardElement.querySelector('.popup__avatar').src = offerObject.author.avatar;
     return cardElement;
