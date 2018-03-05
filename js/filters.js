@@ -68,7 +68,7 @@
   };
 
 
-  var setDisabledInputHadler = function () {
+  var setDisabledInputHandler = function () {
     for (var i = 0; i < formFieldset.length; i++) {
       formFieldset[i].setAttribute('disabled', true);
     }
@@ -138,7 +138,7 @@
   var formResetHandler = function () {
 
     fadeClickHandler();
-    setDisabledInputHadler();
+    setDisabledInputHandler();
     window.map.closeCurrentOffer();
 
     formAddress.value = null;
@@ -162,7 +162,7 @@
 
   fadeClickHandler();
 
-  document.addEventListener('DOMContentLoaded', setDisabledInputHadler);
+  document.addEventListener('DOMContentLoaded', setDisabledInputHandler);
   mapMainPin.addEventListener('mouseup', fadeRemoveClickHandler);
   formReset.addEventListener('click', formResetHandler);
   mapMainPin.addEventListener('mousemove', setAdressHandler);

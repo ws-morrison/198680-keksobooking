@@ -114,7 +114,7 @@
     formCapacity.placeholder = DEFAULT_ROOMS;
     formCapacity.value = DEFAULT_ROOMS;
 
-
+    priceChangeHandler();
     capacityOptionElements.forEach(function (item) {
       if (!item.selected) {
         item.disabled = true;
