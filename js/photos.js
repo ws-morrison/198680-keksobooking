@@ -8,18 +8,38 @@
     'PNG': ''
   };
 
-  var previewImageContainer = document.querySelector('.notice__preview'); // отображение загруженного элемента
-  var uploadImagesControl = document.querySelector('.notice__photo .dropzone'); // кнопка по которой жмакают
+  var previewAvatarContainer = document.querySelector('.notice__preview');
+  var uploadAvatarControl = document.querySelector('#avatar');
+  var uploadImageControl = document.querySelector('#images');
+  var previewImageContainer = document.querySelector('.form__photo-container');
 
-  uploadImagesControl.addEventListener('change', changeInputFilesHandler);
+  var changeInputAvatarHandler = function (evt) {
+    for (var i = 0; i < this.files.length; i++) {
+      showPreviewAvatar(this.files[i]);
+    }
+  };
 
-  function changeInputFilesHandler(evt) {
+  var changeInputImageHandler = function (evt) {
     for (var i = 0; i < this.files.length; i++) {
       showPreviewImage(this.files[i]);
     }
-  }
+  };
 
-  function showPreviewImage(imageFile) {
+
+  var showPreviewAvatar = function (imageFile) {
+    var fileRegExp = new RegExp('^image/(' + Object.keys(TYPES_OF_IMAGES).join('|').replace('\+', '\\+') + ')$', 'i');
+
+    if (!fileRegExp.test(imageFile.type)) {
+      console.log('Изображение не поддерживается');
+      return;
+    }
+
+    var fileReader = new FileReader();
+    fileReader.addEventListener('load', displayAvatarFileReaderHandler);
+    fileReader.readAsDataURL(imageFile);
+  };
+
+  var showPreviewImage = function (imageFile) {
     var fileRegExp = new RegExp('^image/(' + Object.keys(TYPES_OF_IMAGES).join('|').replace('\+', '\\+') + ')$', 'i');
 
     if (!fileRegExp.test(imageFile.type)) {
@@ -30,12 +50,33 @@
     var fileReader = new FileReader();
     fileReader.addEventListener('load', displayImageFileReaderHandler);
     fileReader.readAsDataURL(imageFile);
-  }
+  };
 
-  function displayImageFileReaderHandler(evt) {
+  var displayAvatarFileReaderHandler = function (evt) {
+    var oldAvatar = previewAvatarContainer.querySelector('img');
+
     var uploadImage = document.createElement('img');
-    previewImageContainer.appendChild(uploadImage);
-    uploadImage.src = evt.target.result;
-  }
 
+    uploadImage.height = '70';
+    uploadImage.width = '70';
+    previewAvatarContainer.style.background = '#EEEEE7';
+    uploadImage.src = evt.target.result;
+    previewAvatarContainer.replaceChild(uploadImage, oldAvatar);
+    previewAvatarContainer.appendChild(uploadImage);
+  };
+
+  var displayImageFileReaderHandler = function (evt) {
+
+    var uploadImage = document.createElement('img');
+
+    uploadImage.height = '70';
+    uploadImage.width = '70';
+
+    uploadImage.src = evt.target.result;
+    previewImageContainer.appendChild(uploadImage);
+  };
+
+
+  uploadAvatarControl.addEventListener('change', changeInputAvatarHandler);
+  uploadImageControl.addEventListener('change', changeInputImageHandler);
 })();

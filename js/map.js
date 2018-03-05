@@ -64,13 +64,16 @@
   var getPhotosList = function (photosArray) {
     var photosItem = '';
     for (var i = 0; i < photosArray.length; i++) {
-      photosItem = '<li>' + '<img src =' + photosArray[i] + ' width = 55px, height = 55px style = "margin: 2px"></li>' + photosItem;
+      photosItem = '<li>' + '<img src =' + photosArray[i] + ' width = 85px, height = 85px style = "margin: 5px"></li>' + photosItem;
     }
     return photosItem;
   };
 
   var createCardOffer = function (offerObject) {
     var cardElement = mapTemplate.querySelector('.map__card').cloneNode(true);
+    cardElement.style.width = '250px';
+    cardElement.style.height = '550px';
+    cardElement.style.overflow = 'scroll';
     cardElement.querySelector('h3').textContent = offerObject.offer.title;
     cardElement.querySelector('small').textContent = offerObject.offer.address;
     cardElement.querySelector('.popup__price').textContent = offerObject.offer.price + ' \u20bd/ночь ';
