@@ -4,8 +4,8 @@
   var NOT_FOR_GUESTS_OPTION = 0;
   var DEFAULT_ROOMS = '1';
   var MAX_ROOMS = 100;
-  var PRICE_FLAT = 0;
-  var PRICE_BUNGALO = 1000;
+  var PRICE_BUNGALO = 0;
+  var PRICE_FLAT = 1000;
   var PRICE_HOUSE = 5000;
   var PRICE_PALACE = 10000;
   var INVALID_TITLE_MESSAGE = 'Длина заголовка должна быть от 30 до 100 символов';

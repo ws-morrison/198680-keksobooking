@@ -42,7 +42,7 @@
   };
 
   var renderPins = function (offersArray, additionalClass) {
-    offersArray.slice(0, PINS_LIMIT);
+
     var docFragmnet = document.createDocumentFragment();
 
     offersArray.forEach(function (offer, index) {
