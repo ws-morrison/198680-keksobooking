@@ -1,5 +1,7 @@
 'use strict';
 (function () {
+  var OFFSET_COORD_Y = 150;
+  var OFFSET_COORD_X = 650;
 
 
   var mapLayer = document.querySelector('.map');
@@ -66,7 +68,7 @@
   };
 
 
-  var getDisabledInputOn = function () {
+  var setDisabledInputHandler = function () {
     for (var i = 0; i < formFieldset.length; i++) {
       formFieldset[i].setAttribute('disabled', true);
     }
@@ -104,8 +106,8 @@
       var shiftOffsetY = mapMainPin.offsetTop + shift.y;
 
 
-      shiftOffsetY = shiftOffsetY < 150 ? 150 : shiftOffsetY;
-      shiftOffsetY = shiftOffsetY > 650 ? 650 : shiftOffsetY;
+      shiftOffsetY = shiftOffsetY < OFFSET_COORD_Y ? OFFSET_COORD_Y : shiftOffsetY;
+      shiftOffsetY = shiftOffsetY > OFFSET_COORD_X ? OFFSET_COORD_X : shiftOffsetY;
 
       shiftOffsetX = shiftOffsetX < 0 ? 0 : shiftOffsetX;
       shiftOffsetX = shiftOffsetX > mapOverlay.clientWidth ? mapOverlay.clientWidth : shiftOffsetX;
@@ -126,17 +128,17 @@
 
   });
 
-  var setAdress = function () {
+  var setAdressHandler = function () {
     var setPinX = Math.round((mapMainPin.offsetLeft + (pinX / 2)));
     var setPinY = Math.round((mapMainPin.offsetTop + pinY));
     formAddress.value = setPinX + ', ' + setPinY;
   };
 
 
-  var getFormReset = function () {
+  var formResetHandler = function () {
 
     fadeClickHandler();
-    getDisabledInputOn();
+    setDisabledInputHandler();
     window.map.closeCurrentOffer();
 
     formAddress.value = null;
@@ -154,16 +156,16 @@
       mapMainPin.style.top = mainPinOffsetY + 'px';
     };
     setMainPinOnStart();
-    setAdress();
+    setAdressHandler();
   };
 
 
   fadeClickHandler();
 
-  document.addEventListener('DOMContentLoaded', getDisabledInputOn);
+  document.addEventListener('DOMContentLoaded', setDisabledInputHandler);
   mapMainPin.addEventListener('mouseup', fadeRemoveClickHandler);
-  formReset.addEventListener('click', getFormReset);
-  mapMainPin.addEventListener('mousemove', setAdress);
+  formReset.addEventListener('click', formResetHandler);
+  mapMainPin.addEventListener('mousemove', setAdressHandler);
 
 
 })();

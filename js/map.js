@@ -3,7 +3,8 @@
 (function () {
 
   var ESC_KEYCODE = 27;
-  var pinsLimit = 5;
+  var PINS_LIMIT = 5;
+
   var ApartmentsTypes = {
     flat: 'Квартира',
     house: 'Дом',
@@ -41,7 +42,7 @@
   };
 
   var renderPins = function (offersArray, additionalClass) {
-
+    offersArray.slice(0, PINS_LIMIT);
     var docFragmnet = document.createDocumentFragment();
 
     offersArray.forEach(function (offer, index) {
@@ -49,7 +50,6 @@
       newPin.addEventListener('click', pinClickHandler);
       docFragmnet.appendChild(newPin);
     });
-
     mainMap.appendChild(docFragmnet);
   };
 
@@ -129,7 +129,7 @@
   };
 
   var closeCurrentOffer = function () {
-    var closeCard = document.querySelector('.map__card');
+    var closeCard = mainMap.querySelector('.map__card');
     if (closeCard) {
       closeCard.classList.add('hidden');
     }
@@ -141,7 +141,7 @@
   };
 
   var removeAllPins = function () {
-    var allRenderedPins = document.querySelectorAll('.map__pin');
+    var allRenderedPins = mainMap.querySelectorAll('.map__pin');
 
     for (var i = 0; i < allRenderedPins.length; i++) {
       if (allRenderedPins[i].classList.contains('map__pin--main')) {
@@ -157,18 +157,19 @@
 
 
   window.backend.load(function (data) {
-    window.data = data;
-    window.filtredOffers = data;
-    if (window.filtredOffers) {
-      renderPins(window.filtredOffers.slice(0, pinsLimit), 'hidden');
-    }
+    window.map.data = data;
+    window.map.filtredOffers = data.slice(0, PINS_LIMIT);
+    renderPins(window.map.filtredOffers, 'hidden');
   });
 
+
   window.map = {
+    PINS_LIMIT: PINS_LIMIT,
     renderPins: renderPins,
     closeCurrentOffer: closeCurrentOffer,
     removeAllPins: removeAllPins,
-    filtredOffers: []
+    filtredOffers: [],
+    data: []
   };
 
 })();

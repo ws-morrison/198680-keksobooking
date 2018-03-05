@@ -18,8 +18,8 @@
 
     window.map.removeAllPins();
 
-    window.map.advertsFiltered = setFilters();
-    window.map.renderPins(window.map.advertsFiltered);
+    window.map.filtredOffers = setFilters();
+    window.map.renderPins(window.map.filtredOffers.slice(0, window.map.PINS_LIMIT));
   };
 
   var filterChangeHandler = function (evt) {
@@ -71,7 +71,7 @@
       return item.value;
     });
 
-    return window.data.filter(function (item) {
+    return window.map.data.filter(function (item) {
       if (!setFilterValues(houseType.value, item.offer.type)) {
         return false;
       }

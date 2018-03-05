@@ -4,10 +4,15 @@
   var NOT_FOR_GUESTS_OPTION = 0;
   var DEFAULT_ROOMS = '1';
   var MAX_ROOMS = 100;
-  var PRICE_FLAT = 0;
-  var PRICE_BUNGALO = 1000;
+  var PRICE_BUNGALO = 0;
+  var PRICE_FLAT = 1000;
   var PRICE_HOUSE = 5000;
   var PRICE_PALACE = 10000;
+  var INVALID_TITLE_MESSAGE = 'Длина заголовка должна быть от 30 до 100 символов';
+  var INVALID_PRICE_MESSAGE = 'Цена данного типа жилья не может быть ниже ';
+  var MISSING_MESSAGE = 'Обязательное поле';
+  var MIN_LENGHT = 30;
+
 
   var validNoticeForm = document.querySelector('.notice__form');
   var formRooms = validNoticeForm.querySelector('#room_number');
@@ -22,15 +27,36 @@
 
   var titleInvalidHandler = function () {
     if (formTitle.validity.tooShort) {
-      formTitle.setCustomValidity('Заголовок слишком короткий. Длина заголовка должна быть от 30 до 100 символов');
+      formTitle.setCustomValidity(INVALID_TITLE_MESSAGE);
     } else if (formTitle.validity.tooLong) {
-      formTitle.setCustomValidity('Заголовок слишком длинный. Длина заголовка должна быть от 30 до 100 символов');
+      formTitle.setCustomValidity(INVALID_TITLE_MESSAGE);
     } else if (formTitle.validity.valueMissing) {
-      formTitle.setCustomValidity('Обязательное поле');
+      formTitle.setCustomValidity(MISSING_MESSAGE);
     } else {
       formTitle.setCustomValidity('');
     }
   };
+
+  // Дополнительный обработчки для проверки на валидность
+  // При тернарных операторах eslint выдает ошибку
+  var titleInputHandler = function (evt) {
+    var target = evt.target;
+    if (target.value.length < MIN_LENGHT) {
+      target.setCustomValidity(INVALID_TITLE_MESSAGE);
+    } else {
+      target.setCustomValidity('');
+    }
+  };
+
+  var priceInputHandler = function (evt) {
+    var target = evt.target;
+    if (formPrice.min === formType.value) {
+      target.setCustomValidity(INVALID_PRICE_MESSAGE);
+    } else {
+      target.setCustomValidity('');
+    }
+  };
+
 
   var priceChangeHandler = function () {
 
@@ -53,7 +79,7 @@
     } else if (formPrice.validity.rangeUnderflow) {
       formPrice.setCustomValidity('Цена данного типа жилья от ' + formPrice.min);
     } else if (formPrice.validity.valueMissing) {
-      formPrice.setCustomValidity('Обязательное поле');
+      formPrice.setCustomValidity(MISSING_MESSAGE);
     } else {
       formPrice.setCustomValidity('');
     }
@@ -83,12 +109,12 @@
     }
   };
 
-  var getFormToDefault = function () {
+  var setFormToDefault = function () {
     formRooms.value = DEFAULT_ROOMS;
     formCapacity.placeholder = DEFAULT_ROOMS;
     formCapacity.value = DEFAULT_ROOMS;
 
-
+    priceChangeHandler();
     capacityOptionElements.forEach(function (item) {
       if (!item.selected) {
         item.disabled = true;
@@ -104,7 +130,8 @@
     }
   };
 
-  getFormToDefault();
+
+  setFormToDefault();
 
   formPrice.addEventListener('invalid', priceInvalidHandler);
   formTitle.addEventListener('invalid', titleInvalidHandler);
@@ -112,5 +139,7 @@
   formTimeIn.addEventListener('change', timeChangeHandler);
   formTimeOut.addEventListener('change', timeChangeHandler);
   formRooms.addEventListener('change', guestChangeHandler);
+  formTitle.addEventListener('input', titleInputHandler);
+  formPrice.addEventListener('input', priceInputHandler);
 
 })();
