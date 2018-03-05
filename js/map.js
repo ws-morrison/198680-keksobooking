@@ -4,6 +4,7 @@
 
   var ESC_KEYCODE = 27;
   var PINS_LIMIT = 5;
+
   var ApartmentsTypes = {
     flat: 'Квартира',
     house: 'Дом',
@@ -49,7 +50,6 @@
       newPin.addEventListener('click', pinClickHandler);
       docFragmnet.appendChild(newPin);
     });
-
     mainMap.appendChild(docFragmnet);
   };
 
@@ -158,6 +158,7 @@
 
   window.backend.load(function (data) {
     window.data = data;
+
     renderPins(window.data, 'hidden');
   });
 
