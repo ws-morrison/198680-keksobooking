@@ -37,13 +37,16 @@
     }
   };
 
-
+  // Дополнительный обработчки для проверки на валидность
+  // При тернарных операторах eslint выдает ошибку
   var titleInputHandler = function (evt) {
     var target = evt.target;
-    var targetValidity = target.setCustomValidity(INVALID_TITLE_MESSAGE);
-    (target.value.length < MIN_LENGHT) ? targetValidity : target.setCustomValidity('');
+    if (target.value.length < MIN_LENGHT) {
+      target.setCustomValidity(INVALID_TITLE_MESSAGE);
+    } else {
+      target.setCustomValidity('');
+    }
   };
-
 
   var priceInputHandler = function (evt) {
     var target = evt.target;

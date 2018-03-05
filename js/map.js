@@ -3,7 +3,7 @@
 (function () {
 
   var ESC_KEYCODE = 27;
-  // var PINS_LIMIT = 5;
+  var PINS_LIMIT = 5;
   var ApartmentsTypes = {
     flat: 'Квартира',
     house: 'Дом',
@@ -158,9 +158,9 @@
 
   window.backend.load(function (data) {
     window.data = data;
-    window.filtredOffers = Array.from(data);
-    renderPins(window.filtredOffers, 'hidden');
+    renderPins(window.data, 'hidden');
   });
+
 
   window.map = {
     renderPins: renderPins,

@@ -18,8 +18,8 @@
 
     window.map.removeAllPins();
 
-    window.map.advertsFiltered = setFilters();
-    window.map.renderPins(window.map.advertsFiltered);
+    window.map.filtredOffers = setFilters();
+    window.map.renderPins(window.map.filtredOffers);
   };
 
   var filterChangeHandler = function (evt) {
