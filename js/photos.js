@@ -13,15 +13,15 @@
   var uploadImageControl = document.querySelector('#images');
   var previewImageContainer = document.querySelector('.form__photo-container');
 
-  var changeInputAvatarHandler = function (evt) {
-    for (var i = 0; i < this.files.length; i++) {
-      showPreviewAvatar(this.files[i]);
+  var changeInputAvatarHandler = function () {
+    for (var i = 0; i < uploadAvatarControl.files.length; i++) {
+      showPreviewAvatar(uploadAvatarControl.files[i]);
     }
   };
 
-  var changeInputImageHandler = function (evt) {
-    for (var i = 0; i < this.files.length; i++) {
-      showPreviewImage(this.files[i]);
+  var changeInputImageHandler = function () {
+    for (var i = 0; i < uploadImageControl.files.length; i++) {
+      showPreviewImage(uploadImageControl.files[i]);
     }
   };
 
@@ -30,7 +30,6 @@
     var fileRegExp = new RegExp('^image/(' + Object.keys(TYPES_OF_IMAGES).join('|').replace('\+', '\\+') + ')$', 'i');
 
     if (!fileRegExp.test(imageFile.type)) {
-      console.log('Изображение не поддерживается');
       return;
     }
 
@@ -43,7 +42,6 @@
     var fileRegExp = new RegExp('^image/(' + Object.keys(TYPES_OF_IMAGES).join('|').replace('\+', '\\+') + ')$', 'i');
 
     if (!fileRegExp.test(imageFile.type)) {
-      console.log('Изображение не поддерживается');
       return;
     }
 
