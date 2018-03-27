@@ -1,4 +1,5 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
+## JavaScript, уровень 1. С 23 января по 7 марта 2018
 
 * Студент: [Anton Tikhonov](https://up.htmlacademy.ru/javascript/12/user/198680).
 * Наставник: [Игорь Антонов](https://htmlacademy.ru/profile/antonov).
